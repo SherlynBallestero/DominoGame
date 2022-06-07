@@ -1,6 +1,6 @@
 # DominoGame
-This is a domino 
-Domino
+
+dominó
 Proyecto de Programación II. Facultad de Matemática y Computación - Universidad de La Habana. Curso 2022.
 
 El propósito de este proyecto es implementar una biblioteca de clases que permita modelar y experimentar con diferentes variantes del juego Dominó, así como diferentes estrategias de jugadores virtuales.
