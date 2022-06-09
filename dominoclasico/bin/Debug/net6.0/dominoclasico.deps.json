@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "dominoclasico/1.0.0": {
+        "dependencies": {
+          "juego": "1.0.0"
+        },
+        "runtime": {
+          "dominoclasico.dll": {}
+        }
+      },
+      "juego/1.0.0": {
+        "runtime": {
+          "juego.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "dominoclasico/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "juego/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,12 @@
+D:\cibernética\cibernética\segundo\programacionII\proyecto\domino\juego\bin\Debug\net6.0\juego.deps.json
+D:\cibernética\cibernética\segundo\programacionII\proyecto\domino\juego\bin\Debug\net6.0\juego.dll
+D:\cibernética\cibernética\segundo\programacionII\proyecto\domino\juego\bin\Debug\net6.0\ref\juego.dll
+D:\cibernética\cibernética\segundo\programacionII\proyecto\domino\juego\bin\Debug\net6.0\juego.pdb
+D:\cibernética\cibernética\segundo\programacionII\proyecto\domino\juego\obj\Debug\net6.0\juego.csproj.AssemblyReference.cache
+D:\cibernética\cibernética\segundo\programacionII\proyecto\domino\juego\obj\Debug\net6.0\juego.GeneratedMSBuildEditorConfig.editorconfig
+D:\cibernética\cibernética\segundo\programacionII\proyecto\domino\juego\obj\Debug\net6.0\juego.AssemblyInfoInputs.cache
+D:\cibernética\cibernética\segundo\programacionII\proyecto\domino\juego\obj\Debug\net6.0\juego.AssemblyInfo.cs
+D:\cibernética\cibernética\segundo\programacionII\proyecto\domino\juego\obj\Debug\net6.0\juego.csproj.CoreCompileInputs.cache
+D:\cibernética\cibernética\segundo\programacionII\proyecto\domino\juego\obj\Debug\net6.0\juego.dll
+D:\cibernética\cibernética\segundo\programacionII\proyecto\domino\juego\obj\Debug\net6.0\ref\juego.dll
+D:\cibernética\cibernética\segundo\programacionII\proyecto\domino\juego\obj\Debug\net6.0\juego.pdb
