@@ -1,15 +1,15 @@
 namespace juego;
 public class Player
 {
-   // public  string name;
-    public Player()
+    public  string id;
+    public Player(string id)
     {
-       
+       this.id=id;
     }
     public Records GiveMeRecords(GameInformation gm, Referee rf)
     {
         int cont = 0;
-        System.Console.WriteLine("do you have ?");
+        System.Console.WriteLine("do you have ?"+" "+ this.id);
         foreach (var item in gm.OptionsToPlay)
         {
             System.Console.WriteLine(item + " ");
@@ -17,18 +17,18 @@ public class Player
         System.Console.WriteLine("select a record to play");
         foreach (var item in rf.AsignedRecords[this])
         {
-            System.Console.WriteLine(item + " " + cont);
+            System.Console.WriteLine(cont + " " + item.totalElements[0] + "-" + item.totalElements[1]);
             cont++;
         }
 
         int answer = int.Parse(Console.ReadLine());
-      cont=0;
+        cont=0;
         foreach (var item in rf.AsignedRecords[this])
         {
            if(cont==answer)return item;
            cont++;    
         }
-   return new Records(new List<int>{1,2});
+        return new Records(new List<int>{1,2});
 
     }
   
