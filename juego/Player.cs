@@ -6,14 +6,15 @@ public class Player
     {
        this.id=id;
     }
-    public Records GiveMeRecords(GameInformation gm, Referee rf)
+    public jugada GiveMeRecords(GameInformation gm, Referee rf)
     {
         int cont = 0;
-        System.Console.WriteLine("do you have ?"+" "+ this.id);
+        System.Console.WriteLine("do you have ?"+" jugador  "+ this.id);
         foreach (var item in gm.OptionsToPlay)
         {
-            System.Console.WriteLine(item + " ");
+            System.Console.WriteLine(item + " option# "+ cont++);
         }
+        cont=0;
         System.Console.WriteLine("select a record to play");
         foreach (var item in rf.AsignedRecords[this])
         {
@@ -22,13 +23,16 @@ public class Player
         }
 
         int answer = int.Parse(Console.ReadLine());
+        System.Console.WriteLine( "where do you want to play?"  );
+        int selectedOption = int.Parse(Console.ReadLine());
         cont=0;
         foreach (var item in rf.AsignedRecords[this])
         {
-           if(cont==answer)return item;
+           if(cont==answer)return new jugada( selectedOption, item);
            cont++;    
         }
-        return new Records(new List<int>{1,2});
+        //devo;ver por default ya q no debe llegar aqui, ver como arreglar esto
+        return new jugada (0, new Records(new List<int>{1,2}));
 
     }
   
