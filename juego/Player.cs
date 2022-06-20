@@ -21,7 +21,7 @@ public class Player
         System.Console.WriteLine("select a record to play");
         foreach (var item in rf.AsignedRecords[this])
         {
-            System.Console.WriteLine(cont + " " + item.totalElements[0] + "-" + item.totalElements[1]);
+            System.Console.WriteLine(cont + " " + item.element1 + "-" + item.element2);
             cont++;
         }
 

@@ -3,20 +3,25 @@ namespace juego;
 //public  delegate int Factorial(int x);
 public class Referee
 {
-    public ITerminationConditioner classic;
+    //condicion de terminado el juego
+    public IFinalized classicEnd;
+    //condicion de ganar juego
+    public IWinner clasicWinner;
     public int numberOfOptions;
+    //almacenar las fichas repartidas a cada jugador por torneo 
+    public Dictionary<Player , List<Records>> AsignedRecords { get; set; }
+
     //constructor....
-    public Referee(int numberOfOptions,ITerminationConditioner classic)
+    public Referee(int numberOfOptions,IFinalized classiCEnd,IWinner clasicWinner)
     {
         this.numberOfOptions = numberOfOptions;
         this.AsignedRecords = new Dictionary<Player, List<Records>>();
-        this.classic=classic;
+        this.classicEnd= classiCEnd;
+        this.clasicWinner=clasicWinner;
         // this.cantCaras=cantCaras;
     }
     
 
-    //almacenar las fichas repartidas a cada jugador por torneo 
-    public Dictionary<Player , List<Records>> AsignedRecords { get; set; }
 
     ///<summary>
     /// Esta funcion reparte fichas a cierto jugador,luego registra al jugador si no ha sido registrado 
@@ -104,7 +109,7 @@ public class Referee
     public bool ValidPlay(jugada jugada, GameInformation gi)
     {
         if (gi.OptionsToPlay.Count == 0) return true;
-        return (gi.OptionsToPlay[jugada.position % 2] == jugada.record.totalElements[0] || gi.OptionsToPlay[jugada.position % 2] == jugada.record.totalElements[1]);
+        return (gi.OptionsToPlay[jugada.position % 2] == jugada.record.element1 || gi.OptionsToPlay[jugada.position % 2] == jugada.record.element2);
     }
     ///<summary>
     /// esta funcion hace una jugada a partir de la jugada retornada por el player,o sea hace los cambios adecuados,como 
@@ -117,65 +122,30 @@ public class Referee
         {
             //si hay fichas hay opciones en las que jugar, si no es libre de jugar cualquier ficha sin importar que opcion
             //sea seleccionada por el jugador
-            if (gi.OptionsToPlay[jugada.position % 2] == jugada.record.totalElements[0])
+            if (gi.OptionsToPlay[jugada.position % 2] == jugada.record.element1)
             {
                 //la opcion de jugar ofrecida por el arbitro es movida de acuerdo a cual de los lados de la ficha machee
                 //o sea es removida la opcion que el jugador seleccopnes garantizada que es valida por el arbitro,pero por ejemplo 
                 //si decido jugar el 8,9 y la opcion seleccionada es 8 ahora la nueva opcion sera 9.
-                gi.OptionsToPlay.Remove(jugada.record.totalElements[0]);
-                gi.OptionsToPlay.Add(jugada.record.totalElements[1]);
+                gi.OptionsToPlay.Remove(jugada.record.element1);
+                gi.OptionsToPlay.Add(jugada.record.element2);
                 gi.RecordsInGame.Add(jugada.record);
             }
-            else if (gi.OptionsToPlay[jugada.position % 2] == jugada.record.totalElements[1])
+            else if (gi.OptionsToPlay[jugada.position % 2] == jugada.record.element2)
             {
-                gi.OptionsToPlay.Remove(jugada.record.totalElements[1]);
-                gi.OptionsToPlay.Add(jugada.record.totalElements[0]);
+                gi.OptionsToPlay.Remove(jugada.record.element2);
+                gi.OptionsToPlay.Add(jugada.record.element1);
                 gi.RecordsInGame.Add(jugada.record);
             }
         }
         else
         {
-            gi.OptionsToPlay.Add(jugada.record.totalElements[0]);
-            gi.OptionsToPlay.Add(jugada.record.totalElements[1]);
+            gi.OptionsToPlay.Add(jugada.record.element1);
+            gi.OptionsToPlay.Add(jugada.record.element2);
             gi.RecordsInGame.Add(jugada.record);
         }
     }
-    ///<summary>
-    ///Nos dice true o false en dependencia de si el juego llego a su final, un juego llega a su final 
-    ///si alguno de los jugadores se quedan sin ficha o si ya no se puede jugar mas, o sea todos los jugadores
-    ///han pasado turno dado que no tienen fichas que encaje con las opciones disponibles en el juego.
-    ///</summary>
-    // // public bool EndGame(GameInformation gm)
-    // // {
-    // //     if (gm.OptionsToPlay.Count == 0) return false;
-
-    // //     //se vera si todos los jugadores se pasaron(o sea de entre las opciones de juego ninguna ficha de ningun jugador 
-    // //     //satisface estas opciones) o si hay algn jugador que no tenga fichas.
-    // //     int aux1 = 0;
-    // //     foreach (var item in AsignedRecords.Keys)
-    // //     {
-    // //         if (AsignedRecords[item].Count == 0) return true;
-    // //         //asigned record en item me da las lista con fichas que tiene cada jugador
-    // //         int aux2 = 0;
-    // //         foreach (var item2 in AsignedRecords[item])
-    // //         {
-    // //             //paseando por la lista de fichas que tiene asignado el jugador correspondiente con item
-    // //             if (!gm.OptionsToPlay.Contains(item2.totalElements[0]) && !gm.OptionsToPlay.Contains(item2.totalElements[1]))
-    // //             {
-    // //                 //verificando si el jugador contiene fichas validas para el juego.
-    // //                 aux2++;
-    // //             }
-
-    // //         }
-    // //         if (aux2 == AsignedRecords[item].Count) aux1++;
-    // //     }
-    // //     if (aux1 == AsignedRecords.Count)
-    // //     {
-    // //         return true;
-    // //     }
-    // //     return false;
-
-    // // }
+  
     public bool HavesARecord(GameInformation gm, Player player)
     {
         if (gm.OptionsToPlay.Count == 0) return true;
@@ -183,7 +153,7 @@ public class Referee
         foreach (var item in AsignedRecords[player])
         {
             //paseando por la lista de fichas que tiene asignado el jugador correspondiente con item
-            if (!gm.OptionsToPlay.Contains(item.totalElements[0]) && !gm.OptionsToPlay.Contains(item.totalElements[1]))
+            if (!gm.OptionsToPlay.Contains(item.element1) && !gm.OptionsToPlay.Contains(item.element2))
             {
                 //verificando si el jugador contiene fichas validas para el juego.
                 aux2++;
@@ -193,19 +163,21 @@ public class Referee
         if (aux2 == AsignedRecords[player].Count) return false;
         else return true;
     }
-    ///<summary>
-    /// Se dira cual jugador es el ganador,de acuerdo con el criterio de quien menso pesa tenga.
-    ///</summary>
-    public Player Win()
+  
+}
+public class clasicWinner : IWinner
+{
+    public Player Win(Referee referee)
     {
+
         double min = (double)int.MaxValue;
         double aux = 0;
         Player playerW = new Player("this is for aux");
-        foreach (var item in AsignedRecords.Keys)
+        foreach (var item in referee.AsignedRecords.Keys)
         {
-            if (AsignedRecords[item].Count != 0)
+            if (referee.AsignedRecords[item].Count != 0)
             {
-                foreach (var item2 in AsignedRecords[item])
+                foreach (var item2 in referee.AsignedRecords[item])
                 {
                     aux += item2.weight();
                 }
@@ -220,18 +192,13 @@ public class Referee
                 return item;
             }
         }
-        ////
         Console.BackgroundColor=ConsoleColor.Green;
         System.Console.WriteLine("the winneeeeer is "+ playerW.id);
-        Console.BackgroundColor=ConsoleColor.Black
-        ;
-        
+        Console.BackgroundColor=ConsoleColor.Black;
         return playerW;
     }
-
-
 }
-public class ter:ITerminationConditioner
+public class clasicEnd:IFinalized
 {
       public bool EndGame(GameInformation gm, Referee rf)
     {
@@ -248,7 +215,7 @@ public class ter:ITerminationConditioner
             foreach (var item2 in rf.AsignedRecords[item])
             {
                 //paseando por la lista de fichas que tiene asignado el jugador correspondiente con item
-                if (!gm.OptionsToPlay.Contains(item2.totalElements[0]) && !gm.OptionsToPlay.Contains(item2.totalElements[1]))
+                if (!gm.OptionsToPlay.Contains(item2.element1) && !gm.OptionsToPlay.Contains(item2.element2))
                 {
                     //verificando si el jugador contiene fichas validas para el juego.
                     aux2++;

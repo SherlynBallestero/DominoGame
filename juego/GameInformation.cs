@@ -30,14 +30,7 @@ public class GameInformation
         {
             for (int j = i; j < cant; j++)
             {
-                //if(i<=j)
-                //{}
-                    List<int> aux=new List<int>();
-                    aux.Add(j);
-                    aux.Add(i);
-
-                    records.Add(new Records(aux));
-                
+                records.Add(new Records(i,j));
             }
         }
         Random random=new Random();

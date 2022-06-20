@@ -7,20 +7,18 @@ namespace juego;
 public class Records
 {
     //todos los elementos que contiene una ficha dada, es decir las caras 
-    public List<int> totalElements;
+ 
+    public int element1;
+    public int element2;
     //aca se implementa un calculo de peso convencional de las fichas del domino 
     public int weight()
-    {
-        int a=0;
-        foreach (var item in totalElements)
-        {
-            a+=item;
-        }
-        return a;
+    {   
+        return element1+element2;
     }
     //...constructor
-    public Records(List<int> totalElements)
+    public Records(int element1,int element2)
     {
-        this.totalElements=totalElements;
+        this.element1=element1;
+        this.element2=element2;
     }
 }
