@@ -10,11 +10,7 @@ public class Records
  
     public int element1;
     public int element2;
-    //aca se implementa un calculo de peso convencional de las fichas del domino 
-    public int weight()
-    {   
-        return element1+element2;
-    }
+    
     //...constructor
     public Records(int element1,int element2)
     {

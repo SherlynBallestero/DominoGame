@@ -49,7 +49,7 @@ public class Program
                 }
             }
         }
-        referee.clasicWinner.Win(referee);
+        referee.clasicWinner.Win(referee, new weight(delegate(Records records){return records.element1+records.element2;}));
      }
 
      
