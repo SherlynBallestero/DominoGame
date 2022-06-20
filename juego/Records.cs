@@ -9,7 +9,7 @@ public class Records
     //todos los elementos que contiene una ficha dada, es decir las caras 
     public List<int> totalElements;
     //aca se implementa un calculo de peso convencional de las fichas del domino 
-    public double weight()
+    public int weight()
     {
         int a=0;
         foreach (var item in totalElements)

@@ -9,11 +9,14 @@ public class Player
     public jugada GiveMeRecords(GameInformation gm, Referee rf)
     {
         int cont = 0;
-        System.Console.WriteLine("do you have ?"+" jugador  "+ this.id);
+        System.Console.WriteLine(" jugador  "+ this.id);
+        Console.ForegroundColor=ConsoleColor.Cyan;
         foreach (var item in gm.OptionsToPlay)
         {
             System.Console.WriteLine(item + " option# "+ cont++);
         }
+        Console.ForegroundColor=ConsoleColor.Gray;
+
         cont=0;
         System.Console.WriteLine("select a record to play");
         foreach (var item in rf.AsignedRecords[this])
@@ -32,7 +35,7 @@ public class Player
            cont++;    
         }
         //devo;ver por default ya q no debe llegar aqui, ver como arreglar esto
-        return new jugada (0, new Records(new List<int>{1,2}));
+        return new jugada (0, rf.AsignedRecords[this][0]);
 
     }
   

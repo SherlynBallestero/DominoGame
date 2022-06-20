@@ -1,118 +1,71 @@
-﻿
+﻿using System.Runtime.InteropServices;
 namespace juego;
 //public  delegate int Factorial(int x);
 public class Referee
 {
+    public ITerminationConditioner classic;
     public int numberOfOptions;
     //constructor....
-    public Referee(int numberOfOptions)
+    public Referee(int numberOfOptions,ITerminationConditioner classic)
     {
         this.numberOfOptions = numberOfOptions;
         this.AsignedRecords = new Dictionary<Player, List<Records>>();
+        this.classic=classic;
         // this.cantCaras=cantCaras;
     }
-    //formula de combinacion con repeticion para saber las cantidad de fichas total que se pueden jugar
-    // public int TotalRecords{get{return Factorial(numberOfOPtions+cantCaras-1)/Factorial(cantCaras)*Factorial(numberOfOPtions-1); }}
+    
 
     //almacenar las fichas repartidas a cada jugador por torneo 
-    public Dictionary<Player, List<Records>> AsignedRecords { get; set; }
-
-    //public int  Factorial(int a){int b=0;for(int i=1;i<=a;i++) {b =b*i;}return b;}
-    //trabajar este metodo como delegado o lambda o lo que sea
-
+    public Dictionary<Player , List<Records>> AsignedRecords { get; set; }
 
     ///<summary>
     /// Esta funcion reparte fichas a cierto jugador,luego registra al jugador si no ha sido registrado 
-    ///y registra las fichas agregadas a su mano   
-    ///</summary>
-    // // // public void DistributeRecord(Player player, int cant)
-    // // // {
-    // // //     //cont sirve para asegurar crear el numero de fichas indicado.
-    // // //     int cont = 0;
-    // // //     List<Records> aux = new List<Records>();
-    // // //     //creando ficha... 
-    // // //     while (cont < cant + 1)
-    // // //     {
-    // // //         List<int> ElementsAux = new List<int>();
-    // // //         //haciendo random los numeros para cada cara de la ficha...
-    // // //         Random random = new Random();
-    // // //         bool correct = true;
-    // // //         while (correct)
-    // // //         {
-    // // //             ElementsAux.Add(random.Next(0, numberOfOptions));
-    // // //             ElementsAux.Add(random.Next(0, numberOfOptions));
-    // // //             if (!aux.Contains(new Records(ElementsAux))) correct = false;//hacer un brake
-    // // //             if (AsignedRecords.Count != 0)
-    // // //             {
-    // // //                 foreach (var item in AsignedRecords.Keys)
-    // // //                 {
-
-    // // //                     foreach (var item2 in AsignedRecords[item])
-    // // //                     {
-    // // //                         if (ElementsAux.Contains(item2.totalElements[0]) && ElementsAux.Contains(item2.totalElements[1]))
-    // // //                         {
-    // // //                             correct = true;
-    // // //                         }
-
-    // // //                     }
-    // // //                 }
-    // // //             }
-    // // //         }
-
-    // // //         //ent cuenta si se vuelve a crear ficha
-    // // //         //si no se ha asignado a ningun jugador o se encuentra en las asignadas a este antes 
-    // // //         Records auxRecords = new Records(ElementsAux);
-    // // //         aux.Add(auxRecords);
-    // // //         cont++;
-
-    // // //     }
-    // // //     AsignedRecords.Add(player, aux);
-
-    // // //     //  System.Console.WriteLine(AsignedRecords.Count); 
-    // // // }
-    public void DistributeRecord(Player player, int cant)
+    ///y registra las fichas agregadas a su mano,index va a marcar la ultima ficha repartida,solo se podran repartir las que esten
+    ///en la posicion index en adelante  
+    ///<summary>
+    public void Shuffle(Player player, GameInformation gi, ref int index, [Optional] int cant )
     {
-        bool[,]recordUsed=new bool[cant+1,cant+1];
-        if(AsignedRecords.Count!=0)
-        {
-            foreach (var item in AsignedRecords.Keys)
-            {
-                foreach (var item2 in AsignedRecords[item])
-                {
-                    recordUsed[item2.totalElements[0],item2.totalElements[1]]=true;
-                    recordUsed[item2.totalElements[1],item2.totalElements[0]]=true;
-                }
-            }
-        }
-       
+        List<Records> records=gi.RecordsInOrder;
+        if(cant==0)cant=numberOfOptions;
         List<Records> aux = new List<Records>();
-        int cont = 0;
-        while (cont < cant + 1)
+        int indexaux = 0;
+
+        //estamos verificando hasta que parte del conjunto de fichas ya barajeadas vamos a tomar para reprtir, aqui vemos que se 
+        //repartan siempre por ejemplo si el dominó es 
+        if (index < records.Count)
         {
-             bool done=false;
-            List<int> ElementsAux = new List<int>();
-            while (!done)
+            //primero comprobamos que tenemos fichas para dar, si no tenemos suficiente pero tenemos para dar damos todas
+            if (index + cant <= records.Count)
             {
-
-                ElementsAux = new List<int>();
-                Random random = new Random();
-                ElementsAux.Add(random.Next(0, numberOfOptions-1));
-                ElementsAux.Add(random.Next(0, numberOfOptions-1));
-                if (recordUsed[ElementsAux[0], ElementsAux[1]])
-                {
-                    continue;
-                }
-                    recordUsed[ElementsAux[0], ElementsAux[1]] = true;
-                    recordUsed[ElementsAux[1], ElementsAux[0]] = true;
-                    done = true;
-
+                indexaux = index + cant;
+                
             }
-            Records records=new Records(ElementsAux);
-            aux.Add(records);
-            cont++;
+            else
+            {
+                indexaux = records.Count;
+               
+            }
+            //asignando la cantidad de fichas requeridas al jugador
+            for (int i = index; i < indexaux; i++)
+            {
+                aux.Add(records[i]);
+            }
+            if (!AsignedRecords.ContainsKey(player))
+            {
+                AsignedRecords.Add(player, aux);
+            }
+            else
+            {
+                foreach (var item in aux)
+                {
+                    AsignedRecords[player].Add(item);
+                }
+            }
+            index = indexaux;
+
+
         }
-        AsignedRecords.Add(player, aux);
-        
+
 
     }
 
@@ -171,20 +124,20 @@ public class Referee
                 //si decido jugar el 8,9 y la opcion seleccionada es 8 ahora la nueva opcion sera 9.
                 gi.OptionsToPlay.Remove(jugada.record.totalElements[0]);
                 gi.OptionsToPlay.Add(jugada.record.totalElements[1]);
-                gi.totalRecords.Add(jugada.record);
+                gi.RecordsInGame.Add(jugada.record);
             }
             else if (gi.OptionsToPlay[jugada.position % 2] == jugada.record.totalElements[1])
             {
                 gi.OptionsToPlay.Remove(jugada.record.totalElements[1]);
                 gi.OptionsToPlay.Add(jugada.record.totalElements[0]);
-                gi.totalRecords.Add(jugada.record);
+                gi.RecordsInGame.Add(jugada.record);
             }
         }
         else
         {
             gi.OptionsToPlay.Add(jugada.record.totalElements[0]);
             gi.OptionsToPlay.Add(jugada.record.totalElements[1]);
-            gi.totalRecords.Add(jugada.record);
+            gi.RecordsInGame.Add(jugada.record);
         }
     }
     ///<summary>
@@ -192,37 +145,37 @@ public class Referee
     ///si alguno de los jugadores se quedan sin ficha o si ya no se puede jugar mas, o sea todos los jugadores
     ///han pasado turno dado que no tienen fichas que encaje con las opciones disponibles en el juego.
     ///</summary>
-    public bool EndGame(GameInformation gm)
-    {
-        if (gm.OptionsToPlay.Count == 0) return false;
+    // // public bool EndGame(GameInformation gm)
+    // // {
+    // //     if (gm.OptionsToPlay.Count == 0) return false;
 
-        //se vera si todos los jugadores se pasaron(o sea de entre las opciones de juego ninguna ficha de ningun jugador 
-        //satisface estas opciones) o si hay algn jugador que no tenga fichas.
-        int aux1 = 0;
-        foreach (var item in AsignedRecords.Keys)
-        {
-            if (AsignedRecords[item].Count == 0) return true;
-            //asigned record en item me da las lista con fichas que tiene cada jugador
-            int aux2 = 0;
-            foreach (var item2 in AsignedRecords[item])
-            {
-                //paseando por la lista de fichas que tiene asignado el jugador correspondiente con item
-                if (!gm.OptionsToPlay.Contains(item2.totalElements[0]) && !gm.OptionsToPlay.Contains(item2.totalElements[1]))
-                {
-                    //verificando si el jugador contiene fichas validas para el juego.
-                    aux2++;
-                }
+    // //     //se vera si todos los jugadores se pasaron(o sea de entre las opciones de juego ninguna ficha de ningun jugador 
+    // //     //satisface estas opciones) o si hay algn jugador que no tenga fichas.
+    // //     int aux1 = 0;
+    // //     foreach (var item in AsignedRecords.Keys)
+    // //     {
+    // //         if (AsignedRecords[item].Count == 0) return true;
+    // //         //asigned record en item me da las lista con fichas que tiene cada jugador
+    // //         int aux2 = 0;
+    // //         foreach (var item2 in AsignedRecords[item])
+    // //         {
+    // //             //paseando por la lista de fichas que tiene asignado el jugador correspondiente con item
+    // //             if (!gm.OptionsToPlay.Contains(item2.totalElements[0]) && !gm.OptionsToPlay.Contains(item2.totalElements[1]))
+    // //             {
+    // //                 //verificando si el jugador contiene fichas validas para el juego.
+    // //                 aux2++;
+    // //             }
 
-            }
-            if (aux2 == AsignedRecords[item].Count) aux1++;
-        }
-        if (aux1 == AsignedRecords.Count)
-        {
-            return true;
-        }
-        return false;
+    // //         }
+    // //         if (aux2 == AsignedRecords[item].Count) aux1++;
+    // //     }
+    // //     if (aux1 == AsignedRecords.Count)
+    // //     {
+    // //         return true;
+    // //     }
+    // //     return false;
 
-    }
+    // // }
     public bool HavesARecord(GameInformation gm, Player player)
     {
         if (gm.OptionsToPlay.Count == 0) return true;
@@ -268,9 +221,46 @@ public class Referee
             }
         }
         ////
-        System.Console.WriteLine(playerW.id);
+        Console.BackgroundColor=ConsoleColor.Green;
+        System.Console.WriteLine("the winneeeeer is "+ playerW.id);
+        Console.BackgroundColor=ConsoleColor.Black;
+        
         return playerW;
     }
 
 
+}
+public class ter:ITerminationConditioner
+{
+      public bool EndGame(GameInformation gm, Referee rf)
+    {
+        if (gm.OptionsToPlay.Count == 0) return false;
+
+        //se vera si todos los jugadores se pasaron(o sea de entre las opciones de juego ninguna ficha de ningun jugador 
+        //satisface estas opciones) o si hay algn jugador que no tenga fichas.
+        int aux1 = 0;
+        foreach (var item in rf.AsignedRecords.Keys)
+        {
+            if (rf.AsignedRecords[item].Count == 0) return true;
+            //asigned record en item me da las lista con fichas que tiene cada jugador
+            int aux2 = 0;
+            foreach (var item2 in rf.AsignedRecords[item])
+            {
+                //paseando por la lista de fichas que tiene asignado el jugador correspondiente con item
+                if (!gm.OptionsToPlay.Contains(item2.totalElements[0]) && !gm.OptionsToPlay.Contains(item2.totalElements[1]))
+                {
+                    //verificando si el jugador contiene fichas validas para el juego.
+                    aux2++;
+                }
+
+            }
+            if (aux2 == rf.AsignedRecords[item].Count) aux1++;
+        }
+        if (aux1 == rf.AsignedRecords.Count)
+        {
+            return true;
+        }
+        return false;
+
+    }
 }
