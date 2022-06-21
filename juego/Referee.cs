@@ -4,77 +4,35 @@ namespace juego;
 public class Referee
 {
     //condicion de terminado el juego
-    public IFinalized classicEnd;
+    public IFinalized finalized;
     //condicion de ganar juego
-    public IWinner clasicWinner;
+    public IWinner Winner;
+    //condicion de juego valido
+    public IValidator validator;
+    //repartidor
+    public IShuffler shuffler;
+ 
     public int numberOfOptions;
     //almacenar las fichas repartidas a cada jugador por torneo 
-    public Dictionary<Player , List<Records>> AsignedRecords { get; set; }
+    public Dictionary<Player, List<Records>> AsignedRecords { get; set; }
 
     //constructor....
-    public Referee(int numberOfOptions,IFinalized classiCEnd,IWinner clasicWinner)
+    public Referee(int numberOfOptions, IFinalized finalized, IWinner Winner, IValidator validator, IShuffler shuffler)
     {
         this.numberOfOptions = numberOfOptions;
         this.AsignedRecords = new Dictionary<Player, List<Records>>();
-        this.classicEnd= classiCEnd;
-        this.clasicWinner=clasicWinner;
+        this.finalized = finalized;
+        this.Winner = Winner;
+        this.validator = validator;
+        this.shuffler = shuffler;
         // this.cantCaras=cantCaras;
     }
-    
-    ///<summary>
-    /// Esta funcion reparte fichas a cierto jugador,luego registra al jugador si no ha sido registrado 
-    ///y registra las fichas agregadas a su mano,index va a marcar la ultima ficha repartida,solo se podran repartir las que esten
-    ///en la posicion index en adelante  
-    ///<summary>
-    public void Shuffle(Player player, GameInformation gi, ref int index, [Optional] int cant )
-    {
-        List<Records> records=gi.RecordsInOrder;
-        if(cant==0)cant=numberOfOptions;
-        List<Records> aux = new List<Records>();
-        int indexaux = 0;
 
-        //estamos verificando hasta que parte del conjunto de fichas ya barajeadas vamos a tomar para reprtir, aqui vemos que se 
-        //repartan siempre por ejemplo si el dominó es 
-        if (index < records.Count)
-        {
-            //primero comprobamos que tenemos fichas para dar, si no tenemos suficiente pero tenemos para dar damos todas
-            if (index + cant <= records.Count)
-            {
-                indexaux = index + cant;
-                
-            }
-            else
-            {
-                indexaux = records.Count;
-               
-            }
-            //asignando la cantidad de fichas requeridas al jugador
-            for (int i = index; i < indexaux; i++)
-            {
-                aux.Add(records[i]);
-            }
-            if (!AsignedRecords.ContainsKey(player))
-            {
-                AsignedRecords.Add(player, aux);
-            }
-            else
-            {
-                foreach (var item in aux)
-                {
-                    AsignedRecords[player].Add(item);
-                }
-            }
-            index = indexaux;
-
-
-        }
-
-
-    }
 
     ///<summary>
     ///Dado el jugador actual me dice a quien le toca
     ///y asociar el orden en que jugara cada uno. 
+    //por ahora este metodo es inutil
     ///</summary>
     public Player NextTurn(Player actualPlayer)
     {
@@ -97,18 +55,6 @@ public class Referee
 
     }
 
-    ///<summary>
-    ///Esta funcion retorna si una jugada es valida de acuedo con el estado del tablero y la jugada, la jugada
-    /// viene dada por una ficha y una de las opciones de juego, es decir, esta en el caso en que solo se puede
-    ///jugar fichas que contengan 3 o 4, q son las opciones actualmente viables en el partido, si la opcion 
-    ///seleccionada por el jugador, digase por ej 3 no se puede conectar con la ficha que juega ent la jugada 
-    ///no es valida. 
-    ///</summary>
-    public bool ValidPlay(jugada jugada, GameInformation gi)
-    {
-        if (gi.OptionsToPlay.Count == 0) return true;
-        return (gi.OptionsToPlay[jugada.position % 2] == jugada.record.element1 || gi.OptionsToPlay[jugada.position % 2] == jugada.record.element2);
-    }
     ///<summary>
     /// esta funcion hace una jugada a partir de la jugada retornada por el player,o sea hace los cambios adecuados,como 
     /// darle a gameinformetion las nuevas opciones de juegpo y agregar al tablero la ficha en la posicion indicada por el jugador
@@ -143,7 +89,7 @@ public class Referee
             gi.RecordsInGame.Add(jugada.record);
         }
     }
-  
+
     public bool HavesARecord(GameInformation gm, Player player)
     {
         if (gm.OptionsToPlay.Count == 0) return true;
@@ -161,6 +107,6 @@ public class Referee
         if (aux2 == AsignedRecords[player].Count) return false;
         else return true;
     }
-  
+
 }
 
