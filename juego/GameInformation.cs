@@ -15,9 +15,11 @@ public class GameInformation
     //public delegate weight weight();
     public List<Records> RecordsInOrder { get; set; }
     public int numberOfOptions;
+    public weight weight;
     //constructor...
-    public GameInformation(int numberOfOptions)
+    public GameInformation(int numberOfOptions, weight weight)
     {
+        this.weight=weight;
         RecordsInGame = new List<Records>();
         OptionsToPlay = new List<int>();
         RecordsInOrder = MakingRecords(numberOfOptions);
@@ -50,7 +52,7 @@ public class GameInformation
     }
 
     //esta funcion se encarga de llevar el total de puntos que hay entre las fichas de los jugadores
-    public int  shuffledPoints(weight weight, Referee referee)
+    public int  shuffledPoints( Referee referee)
     {
         int aux=0;
         foreach (var item in referee.AsignedRecords.Keys)
@@ -62,7 +64,7 @@ public class GameInformation
         }
         return aux;
     }
-    public int PointsInGame(weight weight)
+    public int PointsInGame()
     {
         int result=0;
         foreach (var item in RecordsInGame)

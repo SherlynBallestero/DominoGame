@@ -13,18 +13,18 @@ public class Program
         Player C = new Player("03C");
         Player D = new Player("04D");
         int numberOfOptions = 3;
-        GameInformation gi = new GameInformation(numberOfOptions);
+        GameInformation gi = new GameInformation(numberOfOptions,new weight(delegate (Records records) { return records.element1 + records.element2; }));
         Referee referee = new Referee(numberOfOptions, new EndGameAbovePoints(), new clasicWinner(), new validator(), new shuffler());
         int index = 0;
         referee.shuffler.Shuffle(A, gi, ref index, referee);
         referee.shuffler.Shuffle(B, gi, ref index, referee);
         int max=0;
-        while (!referee.finalized.EndGame(gi, referee,new weight(delegate (Records records) { return records.element1 + records.element2; }),ref max))
+        while (!referee.finalized.EndGame(gi, referee,ref max))
         {
             //caminando por cada jugador siempre que el juego no haya acabado
             foreach (Player item in referee.AsignedRecords.Keys)
             {
-                if (referee.finalized.EndGame(gi, referee,new weight(delegate (Records records) { return records.element1 + records.element2; }),ref max)) break;
+                if (referee.finalized.EndGame(gi, referee,ref max)) break;
                 //verificar que el jugador no se pase
                 if (referee.HavesARecord(gi, item))
                 {
@@ -50,7 +50,7 @@ public class Program
                 }
             }
         }
-        referee.Winner.Win(referee, new weight(delegate (Records records) { return records.element1 + records.element2; }));
+        referee.Winner.Win(referee,gi);
     }
 }
 

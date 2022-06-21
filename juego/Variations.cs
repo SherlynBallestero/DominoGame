@@ -4,7 +4,7 @@ namespace juego;
 #region winner
 public class clasicWinner : IWinner
 {
-    public Player Win(Referee referee, weight weight)
+    public Player Win(Referee referee, GameInformation gm)
     {
 
         double min = (double)int.MaxValue;
@@ -16,7 +16,7 @@ public class clasicWinner : IWinner
             {
                 foreach (var item2 in referee.AsignedRecords[item])
                 {
-                    aux += weight(item2);
+                    aux += gm.weight(item2);
                 }
                 if (aux < min)
                 {
@@ -46,7 +46,7 @@ public class clasicWinner : IWinner
 ///</summary>
 public class clasicEnd : IFinalized
 {
-    public bool EndGame(GameInformation gm, Referee rf,weight weight,ref int max)
+    public bool EndGame(GameInformation gm, Referee rf,ref int max)
     {
         if (gm.OptionsToPlay.Count == 0) return false;
 
@@ -87,7 +87,7 @@ public class EndGameAbovePoints : IFinalized
 {
     //cosas para cambiar en este metodo: pasar weight en el contructor de gameInf para no tener que pasarselo ni a este
     //metodo ni a win, calcular el random una unica vez y que no varie
-    public bool EndGame(GameInformation gm, Referee referee,weight weight,ref int max)
+    public bool EndGame(GameInformation gm, Referee referee,ref int max)
     {
         //estableciendo limite superior(valor), para determinar un random correspondiente al numero maximo de puntos que
         //debe haber en mesa para que el juego finalice.Llevarlo por ref para que sea establecido una unica vez durante
@@ -97,16 +97,16 @@ public class EndGameAbovePoints : IFinalized
         {
             if(referee.HavesARecord(gm,item))count++;
         }
-        if(count==referee.AsignedRecords.Count)return true;
+        if(count==0)return true;
         if(max==0)
         {
-            max=gm.shuffledPoints(weight,referee); 
+            max=gm.shuffledPoints(referee); 
             Random random=new Random();
             max=random.Next(max);
         }
         System.Console.WriteLine(max   );
         //comprobando que la mesa no sobrepase dicha soluction
-        return(gm.PointsInGame(weight)>=max);
+        return(gm.PointsInGame()>=max);
     }
 }
 

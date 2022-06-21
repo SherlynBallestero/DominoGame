@@ -4,11 +4,11 @@ namespace juego;
 public delegate int weight(Records records);
 public interface IFinalized
 {
-    public bool EndGame(GameInformation gm, Referee referee,weight weight,ref int max);
+    public bool EndGame(GameInformation gm, Referee referee,ref int max);
 }
 public interface IWinner
 {
-    public Player Win(Referee referee, weight weight);
+    public Player Win(Referee referee,GameInformation gm);
 }
 public interface IValidator
 {
