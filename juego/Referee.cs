@@ -56,7 +56,7 @@ public class Referee
     }
 
     ///<summary>
-    /// esta funcion hace una jugada a partir de la jugada retornada por el player,o sea hace los cambios adecuados,como 
+    /// Esta funcion hace una jugada a partir de la jugada retornada por el player,o sea hace los cambios adecuados,como 
     /// darle a gameinformetion las nuevas opciones de juegpo y agregar al tablero la ficha en la posicion indicada por el jugador
     ///</summary>
     public void Play(jugada jugada, GameInformation gi)

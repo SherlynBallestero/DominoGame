@@ -38,6 +38,14 @@ public class clasicWinner : IWinner
         return playerW;
     }
 }
+public class Winner : IWinner
+{
+    public Player Win(Referee referee, GameInformation gm)
+    {
+        throw new NotImplementedException();
+    }
+}
+
 #endregion 
 #region Finalized
 ///<summary>
@@ -122,10 +130,32 @@ public class EndGameAbovePoints : IFinalized
 ///</summary>
 public class validator : IValidator
 {
-    public bool ValidPlay(jugada jugada, GameInformation gi)
+    
+    public bool ValidPlay(jugada jugada, GameInformation gi,match match)
     {
         if (gi.OptionsToPlay.Count == 0) return true;
-        return (gi.OptionsToPlay[jugada.position % 2] == jugada.record.element1 || gi.OptionsToPlay[jugada.position % 2] == jugada.record.element2);
+        return (match(gi.OptionsToPlay[jugada.position % 2],jugada.record.element1) || match(gi.OptionsToPlay[jugada.position % 2],jugada.record.element2));
+    }
+}
+///jugada valida cuando la ficha jugada tenga un peso par si una nueva ficha dada por las dos caras correspondiente
+///con los dos int que tenemos como opciones de juego  es par e impar en caso 
+///contrario ademas de que las fichas matcheen. 
+public class validatorEvenOdd : IValidator
+{
+    public bool ValidPlay(jugada jugada, GameInformation gi, match match)
+    {
+        //nueva ficha dada por la union de las caras opciones de juego y su peso correspondiente.
+        Records recordsAux=new Records(gi.OptionsToPlay[0],gi.OptionsToPlay[0]);
+        int weightAux=gi.weight(recordsAux);
+
+        bool match1=match(gi.OptionsToPlay[jugada.position % 2],jugada.record.element1);
+        bool match2=match(gi.OptionsToPlay[jugada.position % 2],jugada.record.element2);
+        if (gi.OptionsToPlay.Count == 0) return true;
+        if(match1 || match2)
+        {
+            return gi.weight(jugada.record)%2 == weightAux%2;
+        }
+        return false;
     }
 }
 #endregion

@@ -11,10 +11,9 @@ public class GameInformation
     public List<Records> RecordsInGame { get; set; }
     //actualizar las opciones de juego en cada jugada,paea saber que numeros debe contener la ficha  jugar.
     public List<int> OptionsToPlay { get; set; }
-    //delegado que se encargara de calcular peso de las fichas
-    //public delegate weight weight();
     public List<Records> RecordsInOrder { get; set; }
     public int numberOfOptions;
+    //delegado que se encargara de calcular peso de las fichas
     public weight weight;
     //constructor...
     public GameInformation(int numberOfOptions, weight weight)
