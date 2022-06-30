@@ -15,11 +15,8 @@ public interface IWinner
 }
 public interface IValidator
 {    
-   public bool ValidPlay(jugada jugada, GameInformation gi, match match);
-}
-public interface IContainer
-{
-    public bool HavesARecord(GameInformation gm, Player player);
+   public bool ValidPlay(jugada jugada, GameInformation gi );
+    public bool HavesARecord(Referee referee,GameInformation gm, Player player);
 }
 public interface IShuffler
 {

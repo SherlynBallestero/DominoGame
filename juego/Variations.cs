@@ -38,11 +38,45 @@ public class clasicWinner : IWinner
         return playerW;
     }
 }
+///<summary>
+///este ganador se basa en dado el numero de fichas de los jugadores y el puntaje gana el que tenga mas baja la multiplicacion
+///entre estos parametros.
+///</summary>
 public class Winner : IWinner
 {
+    
     public Player Win(Referee referee, GameInformation gm)
     {
-        throw new NotImplementedException();
+        double max = (double)int.MinValue;
+        double aux = 0;
+        Player playerW = new Player("this is for aux");
+        foreach (var item in referee.AsignedRecords.Keys)
+        {
+            if (referee.AsignedRecords[item].Count != 0)
+            {
+                foreach (var item2 in referee.AsignedRecords[item])
+                {
+                    aux += gm.weight(item2);
+                }
+                aux=aux*referee.AsignedRecords[item].Count;
+                if (aux > max)
+                {
+                    max = aux;
+                    playerW = item;
+                }
+            }
+            else
+            {
+                Console.BackgroundColor = ConsoleColor.Green;
+                System.Console.WriteLine("the winneeeeer is " + item.id);
+                Console.BackgroundColor = ConsoleColor.Black;
+                return item;
+            }
+        }
+        Console.BackgroundColor = ConsoleColor.Green;
+        System.Console.WriteLine("the winneeeeer is " + playerW.id);
+        Console.BackgroundColor = ConsoleColor.Black;
+        return playerW;
     }
 }
 
@@ -54,7 +88,7 @@ public class Winner : IWinner
 ///</summary>
 public class clasicEnd : IFinalized
 {
-    public bool EndGame(GameInformation gm, Referee rf,ref int max)
+    public bool EndGame(GameInformation gm, Referee rf, ref int max)
     {
         if (gm.OptionsToPlay.Count == 0) return false;
 
@@ -95,26 +129,26 @@ public class EndGameAbovePoints : IFinalized
 {
     //cosas para cambiar en este metodo: pasar weight en el contructor de gameInf para no tener que pasarselo ni a este
     //metodo ni a win, calcular el random una unica vez y que no varie
-    public bool EndGame(GameInformation gm, Referee referee,ref int max)
+    public bool EndGame(GameInformation gm, Referee referee, ref int max)
     {
         //estableciendo limite superior(valor), para determinar un random correspondiente al numero maximo de puntos que
         //debe haber en mesa para que el juego finalice.Llevarlo por ref para que sea establecido una unica vez durante
         //el juego.
-        int count=0;
+        int count = 0;
         foreach (var item in referee.AsignedRecords.Keys)
         {
-            if(referee.HavesARecord(gm,item))count++;
+            if (referee.HavesARecord(gm, item)) count++;
         }
-        if(count==0)return true;
-        if(max==0)
+        if (count == 0) return true;
+        if (max == 0)
         {
-            max=gm.shuffledPoints(referee); 
-            Random random=new Random();
-            max=random.Next(max);
+            max = gm.shuffledPoints(referee);
+            Random random = new Random();
+            max = random.Next(max);
         }
-        System.Console.WriteLine(max   );
+        System.Console.WriteLine(max);
         //comprobando que la mesa no sobrepase dicha soluction
-        return(gm.PointsInGame()>=max);
+        return (gm.PointsInGame() >= max);
     }
 }
 
@@ -128,13 +162,37 @@ public class EndGameAbovePoints : IFinalized
 ///seleccionada por el jugador, digase por ej 3 no se puede conectar con la ficha que juega ent la jugada 
 ///no es valida. 
 ///</summary>
+//asegurarme que siempre se le pase a la clase validator un match en el constructor,analizar si es estrictamente
 public class validator : IValidator
 {
-    
-    public bool ValidPlay(jugada jugada, GameInformation gi,match match)
+     public match match;
+    public  validator(match match)
+    {
+        this.match=match;
+    }
+    public bool HavesARecord(Referee referee, GameInformation gm, Player player)
+    {
+         if (gm.OptionsToPlay.Count == 0) return true;
+        int aux2 = 0;
+        foreach (var item in referee.AsignedRecords[player])
+        {
+            //paseando por la lista de fichas que tiene asignado el jugador correspondiente con item
+            //arreglar esto q esta muy feo
+            if (!match(gm.OptionsToPlay[0],item.element1)&&!match(gm.OptionsToPlay[1],item.element1) && !match(gm.OptionsToPlay[0],item.element2) && !match(gm.OptionsToPlay[1],item.element2))
+            {
+                //verificando si el jugador contiene fichas validas para el juego.
+                aux2++;
+            }
+
+        }
+        if (aux2 == referee.AsignedRecords[player].Count) return false;
+        else return true;
+    }
+
+    public bool ValidPlay(jugada jugada, GameInformation gi)
     {
         if (gi.OptionsToPlay.Count == 0) return true;
-        return (match(gi.OptionsToPlay[jugada.position % 2],jugada.record.element1) || match(gi.OptionsToPlay[jugada.position % 2],jugada.record.element2));
+        return (match(gi.OptionsToPlay[jugada.position % 2], jugada.record.element1) || match(gi.OptionsToPlay[jugada.position % 2], jugada.record.element2));
     }
 }
 ///jugada valida cuando la ficha jugada tenga un peso par si una nueva ficha dada por las dos caras correspondiente
@@ -142,18 +200,42 @@ public class validator : IValidator
 ///contrario ademas de que las fichas matcheen. 
 public class validatorEvenOdd : IValidator
 {
-    public bool ValidPlay(jugada jugada, GameInformation gi, match match)
+    public match match;
+    public  validatorEvenOdd(match match)
+    {
+        this.match=match;
+    }
+    public bool HavesARecord(Referee referee,GameInformation gm, Player player)
+    {
+       if (gm.OptionsToPlay.Count == 0) return true;
+        int aux2 = 0;
+        foreach (var item in referee.AsignedRecords[player])
+        {
+            //paseando por la lista de fichas que tiene asignado el jugador correspondiente con item
+            //arreglar esto q esta muy feo
+            if (!match(gm.OptionsToPlay[0],item.element1)&&!match(gm.OptionsToPlay[1],item.element1) && !match(gm.OptionsToPlay[0],item.element2) && !match(gm.OptionsToPlay[1],item.element2))
+            {
+                //verificando si el jugador contiene fichas validas para el juego.
+                aux2++;
+            }
+
+        }
+        if (aux2 == referee.AsignedRecords[player].Count) return false;
+        else return true;
+    }
+
+    public bool ValidPlay(jugada jugada, GameInformation gi)
     {
         //nueva ficha dada por la union de las caras opciones de juego y su peso correspondiente.
-        Records recordsAux=new Records(gi.OptionsToPlay[0],gi.OptionsToPlay[0]);
-        int weightAux=gi.weight(recordsAux);
+        Records recordsAux = new Records(gi.OptionsToPlay[0], gi.OptionsToPlay[0]);
+        int weightAux = gi.weight(recordsAux);
 
-        bool match1=match(gi.OptionsToPlay[jugada.position % 2],jugada.record.element1);
-        bool match2=match(gi.OptionsToPlay[jugada.position % 2],jugada.record.element2);
+        bool match1 = match(gi.OptionsToPlay[jugada.position % 2], jugada.record.element1);
+        bool match2 = match(gi.OptionsToPlay[jugada.position % 2], jugada.record.element2);
         if (gi.OptionsToPlay.Count == 0) return true;
-        if(match1 || match2)
+        if (match1 || match2)
         {
-            return gi.weight(jugada.record)%2 == weightAux%2;
+            return gi.weight(jugada.record) % 2 == weightAux % 2;
         }
         return false;
     }
@@ -182,7 +264,6 @@ public class shuffler : IShuffler
             if (index + cant <= records.Count)
             {
                 indexaux = index + cant;
-
             }
             else
             {
@@ -212,4 +293,74 @@ public class shuffler : IShuffler
 
     }
 }
+///<summary>
+/// repartimos fichas que tengan suma de puntos par a jugadores de indice par e impar a jugadores de indice impar
+///</summary>
+public class shuffler2 : IShuffler
+{
+    public void Shuffle(Player player, GameInformation gi, ref int index, Referee rf, [Optional] int cant)
+    {
+
+        List<Records> records = gi.RecordsInOrder;
+        //cada vez que se asigne ficha se borrara esa ficha de records in order
+        if (cant == 0) cant = rf.numberOfOptions;
+        bool even = rf.AsignedRecords.Count % 2 == 0;
+        HashSet<Records> used = new HashSet<Records>();
+        if (rf.AsignedRecords.ContainsKey(player))
+        {
+            int cont = 0;
+            foreach (var item in rf.AsignedRecords.Keys)
+            {
+                if (item.id == player.id) cont++;
+            }
+            even = cont % 2 == 0;
+        }
+        else
+        {
+            rf.AsignedRecords.Add(player, new List<Records>());
+        }
+
+        int limit = 0;
+        foreach (var item in records)
+        {
+            if (even)
+            {
+                if ((item.element1 + item.element2) % 2 == 0)
+                {
+                    if (!used.Contains(item))
+                    {
+                        rf.AsignedRecords[player].Add(item);
+                        limit++;
+                        used.Add(item);
+                        gi.RecordsInGame.Add(item);
+
+                    }
+                }
+            }
+            else
+            {
+                if ((item.element1 + item.element2) % 2 != 0)
+                {
+                   if (!used.Contains(item))
+                    {
+                        rf.AsignedRecords[player].Add(item);
+                        limit++;
+                        used.Add(item);
+                        gi.RecordsInGame.Add(item);
+                    }
+
+                }
+            }
+            if (limit == cant) break;
+        }
+        foreach (var item in used)
+        {
+            gi.RecordsInOrder.Remove(item);
+        }
+
+
+
+    }
+}
+
 #endregion

@@ -14,7 +14,7 @@ public class Program
         Player D = new Player("04D");
         int numberOfOptions = 3;
         GameInformation gi = new GameInformation(numberOfOptions,new weight(delegate (Records records) { return records.element1 + records.element2; }));
-        Referee referee = new Referee(numberOfOptions, new clasicEnd(), new clasicWinner(), new validator(), new shuffler());
+        Referee referee = new Referee(numberOfOptions, new clasicEnd(), new clasicWinner(), new validator( new match(delegate(int option,int record){return option==record;})), new shuffler2());
         int index = 0;
         referee.shuffler.Shuffle(A, gi, ref index, referee);
         referee.shuffler.Shuffle(B, gi, ref index, referee);
@@ -30,7 +30,7 @@ public class Program
                 {
 
                     jugada jugadaAux = item.GiveMeRecords(gi, referee);
-                    while (!referee.validator.ValidPlay(jugadaAux, gi, new match(delegate(int option,int record){return option==record;})))
+                    while (!referee.validator.ValidPlay(jugadaAux, gi))
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         System.Console.WriteLine("wrong!!!!!");
