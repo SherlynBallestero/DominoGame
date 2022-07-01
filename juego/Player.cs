@@ -13,7 +13,7 @@ public class Player
         Console.ForegroundColor=ConsoleColor.Cyan;
         foreach (var item in gm.OptionsToPlay)
         {
-            System.Console.WriteLine(item + " option# "+ cont++);
+            System.Console.WriteLine(item.option + " option# "+ cont++);
         }
         Console.ForegroundColor=ConsoleColor.Gray;
 

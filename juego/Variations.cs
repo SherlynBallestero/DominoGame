@@ -88,6 +88,11 @@ public class Winner : IWinner
 ///</summary>
 public class clasicEnd : IFinalized
 {
+    public match match;
+    public  clasicEnd(match match)
+    {
+        this.match=match;
+    }
     public bool EndGame(GameInformation gm, Referee rf, ref int max)
     {
         if (gm.OptionsToPlay.Count == 0) return false;
@@ -103,7 +108,7 @@ public class clasicEnd : IFinalized
             foreach (var item2 in rf.AsignedRecords[item])
             {
                 //paseando por la lista de fichas que tiene asignado el jugador correspondiente con item
-                if (!gm.OptionsToPlay.Contains(item2.element1) && !gm.OptionsToPlay.Contains(item2.element2))
+                if (gm.OptionsToPlay[0].option!=item2.element1 && gm.OptionsToPlay[0].option!=item2.element2 && gm.OptionsToPlay[1].option!=item2.element1 && gm.OptionsToPlay[1].option!=item2.element2)
                 {
                     //verificando si el jugador contiene fichas validas para el juego.
                     aux2++;
@@ -127,6 +132,11 @@ public class clasicEnd : IFinalized
 ///</summary>
 public class EndGameAbovePoints : IFinalized
 {
+    public match match;
+    public  EndGameAbovePoints(match match)
+    {
+        this.match=match;
+    }
     //cosas para cambiar en este metodo: pasar weight en el contructor de gameInf para no tener que pasarselo ni a este
     //metodo ni a win, calcular el random una unica vez y que no varie
     public bool EndGame(GameInformation gm, Referee referee, ref int max)
@@ -137,7 +147,7 @@ public class EndGameAbovePoints : IFinalized
         int count = 0;
         foreach (var item in referee.AsignedRecords.Keys)
         {
-            if (referee.HavesARecord(gm, item)) count++;
+            if (referee.HavesARecord(referee,gm, item,match)) count++;
         }
         if (count == 0) return true;
         if (max == 0)
@@ -170,29 +180,11 @@ public class validator : IValidator
     {
         this.match=match;
     }
-    public bool HavesARecord(Referee referee, GameInformation gm, Player player)
-    {
-         if (gm.OptionsToPlay.Count == 0) return true;
-        int aux2 = 0;
-        foreach (var item in referee.AsignedRecords[player])
-        {
-            //paseando por la lista de fichas que tiene asignado el jugador correspondiente con item
-            //arreglar esto q esta muy feo
-            if (!match(gm.OptionsToPlay[0],item.element1)&&!match(gm.OptionsToPlay[1],item.element1) && !match(gm.OptionsToPlay[0],item.element2) && !match(gm.OptionsToPlay[1],item.element2))
-            {
-                //verificando si el jugador contiene fichas validas para el juego.
-                aux2++;
-            }
-
-        }
-        if (aux2 == referee.AsignedRecords[player].Count) return false;
-        else return true;
-    }
-
     public bool ValidPlay(jugada jugada, GameInformation gi)
     {
         if (gi.OptionsToPlay.Count == 0) return true;
-        return (match(gi.OptionsToPlay[jugada.position % 2], jugada.record.element1) || match(gi.OptionsToPlay[jugada.position % 2], jugada.record.element2));
+        //arreglar el match q no sea tan grande
+        return (match(gi.OptionsToPlay[jugada.position % 2].records,gi.OptionsToPlay[jugada.position % 2].option,jugada.record, jugada.record.element1) || match(gi.OptionsToPlay[jugada.position % 2].records,gi.OptionsToPlay[jugada.position % 2].option,jugada.record, jugada.record.element2));
     }
 }
 ///jugada valida cuando la ficha jugada tenga un peso par si una nueva ficha dada por las dos caras correspondiente
@@ -205,33 +197,15 @@ public class validatorEvenOdd : IValidator
     {
         this.match=match;
     }
-    public bool HavesARecord(Referee referee,GameInformation gm, Player player)
-    {
-       if (gm.OptionsToPlay.Count == 0) return true;
-        int aux2 = 0;
-        foreach (var item in referee.AsignedRecords[player])
-        {
-            //paseando por la lista de fichas que tiene asignado el jugador correspondiente con item
-            //arreglar esto q esta muy feo
-            if (!match(gm.OptionsToPlay[0],item.element1)&&!match(gm.OptionsToPlay[1],item.element1) && !match(gm.OptionsToPlay[0],item.element2) && !match(gm.OptionsToPlay[1],item.element2))
-            {
-                //verificando si el jugador contiene fichas validas para el juego.
-                aux2++;
-            }
-
-        }
-        if (aux2 == referee.AsignedRecords[player].Count) return false;
-        else return true;
-    }
 
     public bool ValidPlay(jugada jugada, GameInformation gi)
     {
         //nueva ficha dada por la union de las caras opciones de juego y su peso correspondiente.
-        Records recordsAux = new Records(gi.OptionsToPlay[0], gi.OptionsToPlay[0]);
-        int weightAux = gi.weight(recordsAux);
+        
+        int weightAux = gi.weight(gi.OptionsToPlay[jugada.position%2].records);
 
-        bool match1 = match(gi.OptionsToPlay[jugada.position % 2], jugada.record.element1);
-        bool match2 = match(gi.OptionsToPlay[jugada.position % 2], jugada.record.element2);
+        bool match1 = match(gi.OptionsToPlay[jugada.position % 2].records,gi.OptionsToPlay[jugada.position % 2].option,jugada.record, jugada.record.element1);
+        bool match2 = match(gi.OptionsToPlay[jugada.position % 2].records,gi.OptionsToPlay[jugada.position % 2].option,jugada.record, jugada.record.element2);
         if (gi.OptionsToPlay.Count == 0) return true;
         if (match1 || match2)
         {

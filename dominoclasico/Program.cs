@@ -2,8 +2,9 @@
 public class Program
 {
     public static void Main(string[] argd)
-    {
+    {  
         WaysToPLay1();
+    
     }
     public static void WaysToPLay1()
     {
@@ -12,9 +13,10 @@ public class Program
         Player B = new Player("02B");
         Player C = new Player("03C");
         Player D = new Player("04D");
-        int numberOfOptions = 3;
+        match match=new match(delegate(Records records1,int optionRecord1,Records records2,int optionRecord2){return optionRecord1==optionRecord2;});
+        int numberOfOptions = 10;
         GameInformation gi = new GameInformation(numberOfOptions,new weight(delegate (Records records) { return records.element1 + records.element2; }));
-        Referee referee = new Referee(numberOfOptions, new clasicEnd(), new clasicWinner(), new validator( new match(delegate(int option,int record){return option==record;})), new shuffler2());
+        Referee referee = new Referee(numberOfOptions, new clasicEnd(match), new clasicWinner(), new validator(match), new shuffler());
         int index = 0;
         referee.shuffler.Shuffle(A, gi, ref index, referee);
         referee.shuffler.Shuffle(B, gi, ref index, referee);
@@ -26,7 +28,7 @@ public class Program
             {
                 if (referee.finalized.EndGame(gi, referee,ref max)) break;
                 //verificar que el jugador no se pase
-                if (referee.HavesARecord(gi, item))
+                if (referee.HavesARecord(referee,gi, item,match))
                 {
 
                     jugada jugadaAux = item.GiveMeRecords(gi, referee);
@@ -38,7 +40,7 @@ public class Program
 
                         jugadaAux = item.GiveMeRecords(gi, referee);
                     }
-                    referee.Play(jugadaAux, gi);
+                    referee.Play(jugadaAux, gi,new match(delegate(Records records1,int optionRecords1,Records records2,int optionRecord2){return optionRecords1==optionRecord2;}));
                     referee.AsignedRecords[item].Remove(jugadaAux.record);
                 }
                 else

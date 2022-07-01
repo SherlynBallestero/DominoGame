@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 namespace juego;
 public delegate int weight(Records records);
 //cambiar esto a pasarle dos fichas
-public delegate bool match(int option,int records);
+public delegate bool match(Records recordsOption,int option,Records records,int recordsPart);
 
 public interface IFinalized
 {
@@ -16,7 +16,6 @@ public interface IWinner
 public interface IValidator
 {    
    public bool ValidPlay(jugada jugada, GameInformation gi );
-    public bool HavesARecord(Referee referee,GameInformation gm, Player player);
 }
 public interface IShuffler
 {
