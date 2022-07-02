@@ -11,13 +11,16 @@ namespace juego
         public List<(Records rcd,int weight)> records;
         //indices de indices de las fichas que matchean con las opciones para jugar dada la lista anterior
         public List<Records> matchedRec;
+        //opciones a jugar
+        public List<(Records record,int option)>OptionsToPlay; 
         //lista de opciones en las que jugar
-        public InformationForPlayer(Dictionary<Player,List<int>> turnPass,Dictionary<Player,List<jugada>> turnPlayed,List<(Records rcd,int weight)> records,List<Records> matchedRec)
+        public InformationForPlayer(List<(Records,int)>OptionsToPlay,Dictionary<Player,List<int>> turnPass,Dictionary<Player,List<jugada>> turnPlayed,List<(Records rcd,int weight)> records,List<Records> matchedRec)
         {
             this.turnPass=turnPass;
             this.turnPlayed=turnPlayed;
             this.records=records;
             this.matchedRec=matchedRec;
+            this.OptionsToPlay=OptionsToPlay;
         }
 
 

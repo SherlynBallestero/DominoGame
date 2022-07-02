@@ -6,12 +6,13 @@ public class Player
     {
        this.id=id;
     }
-    public jugada GiveMeRecords(GameInformation gm, Referee rf)
+    public jugada GiveMeRecords(InformationForPlayer ifp)
     {
         int cont = 0;
         System.Console.WriteLine(" jugador  "+ this.id);
         Console.ForegroundColor=ConsoleColor.Cyan;
-        foreach (var item in gm.OptionsToPlay)
+        //foreach (var item in gm.OptionsToPlay)
+        foreach (var item in ifp.OptionsToPlay)
         {
             System.Console.WriteLine(item.option + " option# "+ cont++);
         }
@@ -19,9 +20,10 @@ public class Player
 
         cont=0;
         System.Console.WriteLine("select a record to play");
-        foreach (var item in rf.AsignedRecords[this])
+        //foreach (var item in rf.AsignedRecords[this])
+        foreach (var item in ifp.records)
         {
-            System.Console.WriteLine(cont + " " + item.element1 + "-" + item.element2);
+            System.Console.WriteLine(cont + " " + item.rcd.element1 + "-" + item.rcd.element2);
             cont++;
         }
 
@@ -29,13 +31,17 @@ public class Player
         System.Console.WriteLine( "where do you want to play?"  );
         int selectedOption = int.Parse(Console.ReadLine());
         cont=0;
-        foreach (var item in rf.AsignedRecords[this])
+        //foreach (var item in rf.AsignedRecords[this])
+        foreach (var item in ifp.records)
         {
-           if(cont==answer)return new jugada( selectedOption, item);
-           cont++;    
+           if(cont==answer){
+            return new jugada( selectedOption, item.rcd);}
+            cont++;    
+
         }
         //devo;ver por default ya q no debe llegar aqui, ver como arreglar esto
-        return new jugada (0, rf.AsignedRecords[this][0]);
+        
+        return new jugada (0, ifp.records[0].rcd);
 
     }
   
