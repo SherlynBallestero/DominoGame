@@ -32,7 +32,7 @@ public class GameInformation
         this.numberOfOptions = numberOfOptions;
         Dictionary<Player,List<jugada>> turnPlayed=new Dictionary<Player, List<jugada>>();
         Dictionary<Player,List<int>> turnPass=new Dictionary<Player, List<int>>();
-        //this.weight=weight();
+        
     }
     //aqui e ponen las fichas en orden random,como barajear ,asi al tomar las fichas de esta lista la puedo tomar por ejemplo las
     //primeras nueve al primer jugador y asi.
@@ -43,7 +43,8 @@ public class GameInformation
         {
             for (int j = i; j < cant; j++)
             {
-                records.Add(new Records(i, j));
+
+                records.Add(new Records(new List<int>(){i,j}));
             }
         }
         Random random = new Random();

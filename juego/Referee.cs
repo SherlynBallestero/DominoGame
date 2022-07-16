@@ -58,7 +58,7 @@ public class Referee
     /// Esta funcion hace una jugada a partir de la jugada retornada por el player,o sea hace los cambios adecuados,como 
     /// darle a gameinformetion las nuevas opciones de juegpo y agregar al tablero la ficha en la posicion indicada por el jugador
     ///</summary>
-    public void Play(Player player, jugada jugada, GameInformation gi, match match)
+    public void Play(jugada jugada, GameInformation gi, match match)
     {
         //se ve si hay o no fichas en el tablero por las que jugar.
         if (gi.OptionsToPlay.Count != 0)
@@ -75,7 +75,6 @@ public class Referee
                 gi.OptionsToPlay.Remove(gi.OptionsToPlay[jugada.position % 2]);
                 gi.OptionsToPlay.Add(t);
                 gi.RecordsInGame.Add(jugada.record);
-
             }
             else if (match(gi.OptionsToPlay[jugada.position % 2].records, gi.OptionsToPlay[jugada.position % 2].option, jugada.record, jugada.record.element2))
             {
@@ -91,17 +90,6 @@ public class Referee
             gi.OptionsToPlay.Add((jugada.record, jugada.record.element2));
             gi.RecordsInGame.Add(jugada.record);
         }
-        //agregando al almacen de jugada del player
-        // if (gi.turnPlayed.ContainsKey(player))
-        // {
-        //     gi.turnPlayed[player].Add(jugada);
-        // }
-        // else
-        // {
-        //     List<jugada> aux = new List<jugada>();
-        //     aux.Add(jugada);
-        //     gi.turnPlayed.Add(player, aux);
-        // }
     }
     public bool HavesARecord(Referee referee, GameInformation gm, Player player, match match)
     {
@@ -125,7 +113,7 @@ public class Referee
     {
         //formando diccionario de turnos pasados
         Dictionary<Player, List<int>> turnPass = new Dictionary<Player, List<int>>();
-        if (gm.turnPass != null)
+        if (turnPass.Count != 0)
         {
 
             foreach (var item in gm.turnPass.Keys)
@@ -135,8 +123,9 @@ public class Referee
         }
         //formando dictonary de jugada de cada player
         Dictionary<Player, List<jugada>> turnPlayed = new Dictionary<Player, List<jugada>>();
-        if (gm.turnPlayed != null)
+        if (turnPlayed.Count != 0)
         {
+
             foreach (var item in gm.turnPlayed.Keys)
             {
                 turnPlayed.Add(item, gm.turnPlayed[item].ToList<jugada>());
@@ -145,42 +134,24 @@ public class Referee
         // formando lista de fichas que tiene el jugador con sus valores correspondientes
         List<(Records rcd, int weight)> records = new List<(Records rcd, int weight)>();
         //Buscando indices de las fichas que matchean con las opciones para jugar dada la lista anterior
-        List<Records> matchedRec = new List<Records>();
+        List<(Records,int)> matchedRec = new List<(Records,int)>();
         foreach (var item in referee.AsignedRecords[player])
         {
             records.Add((item, weight(item)));
-            if (gm.OptionsToPlay.Count != 0)
+            if(gm.OptionsToPlay.Count!=0){
+
+            if (match(gm.OptionsToPlay[0].records, gm.OptionsToPlay[0].option, item, item.element1) || match(gm.OptionsToPlay[0].records, gm.OptionsToPlay[0].option, item, item.element2) || match(gm.OptionsToPlay[1].records, gm.OptionsToPlay[1].option, item, item.element1) || match(gm.OptionsToPlay[1].records, gm.OptionsToPlay[1].option, item, item.element2))
             {
-                if (match(gm.OptionsToPlay[0].records, gm.OptionsToPlay[0].option, item, item.element1) || match(gm.OptionsToPlay[0].records, gm.OptionsToPlay[0].option, item, item.element2) || match(gm.OptionsToPlay[1].records, gm.OptionsToPlay[1].option, item, item.element1) || match(gm.OptionsToPlay[1].records, gm.OptionsToPlay[1].option, item, item.element2))
-                {
-                    //cambiar de fichas que matcheen a fichas validas
-                    matchedRec.Add(item);
-                }
+                matchedRec.Add((item,weight(item)));
             }
-            else { matchedRec.Add(item); }
-            //si no hay fichas por las q jugar todas deberian matchear en treoria
+            }
+            else{
+                matchedRec.Add((item,weight(item)));
+            }
         }
+        List<(Records,int)> OPtions=gm.OptionsToPlay.ToList();
+        return new InformationForPlayer(turnPass, turnPlayed, records, matchedRec, OPtions, match);
 
-
-        //opciones a jugar
-        List<(Records, int)> options = gm.OptionsToPlay.ToList();
-        return new InformationForPlayer(options, turnPass, turnPlayed, records, matchedRec);
-
-    }
-    public void Passed(GameInformation gi, Player player)
-    {
-        if (gi.turnPass.ContainsKey(player))
-        {
-            foreach (var item2 in gi.OptionsToPlay)
-                gi.turnPass[player].Add(item2.option);
-        }
-        else
-        {
-            List<int> aux = new List<int>();
-            foreach (var item2 in gi.OptionsToPlay)
-                aux.Add(item2.option);
-            gi.turnPass.Add(player, aux);
-        }
     }
 }
 

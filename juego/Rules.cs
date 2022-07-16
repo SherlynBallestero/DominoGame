@@ -5,13 +5,20 @@ public delegate int weight(Records records);
 //cambiar esto a pasarle dos fichas
 public delegate bool match(Records recordsOption,int option,Records records,int recordsPart);
 
+public interface ITurnPlayer
+{
+    /// <summary>Determina la distibucion de los turnos de los jugadores</summary>
+    /// <param name="turns">Distribucion de los turnos de los jugadores</param>
+    /// <param name="ind">Indice del jugador que le corresponde jugar</param>
+    public void Turn(int[] turns, int ind);
+}
 public interface IFinalized
 {
     public bool EndGame(GameInformation gm, Referee referee,ref int max);
 }
 public interface IWinner
 {
-    public Player Win(Referee referee,GameInformation gm);
+    public string Win(Referee referee,GameInformation gm);
 }
 public interface IValidator
 {    

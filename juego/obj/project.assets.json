@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\cibernética\\cibernética\\segundo\\programacionII\\proyecto\\Nueva carpeta\\DominoGame\\juego\\juego.csproj",
+      "projectUniqueName": "D:\\cibernética\\DominoGame-main\\juego\\juego.csproj",
       "projectName": "juego",
-      "projectPath": "D:\\cibernética\\cibernética\\segundo\\programacionII\\proyecto\\Nueva carpeta\\DominoGame\\juego\\juego.csproj",
+      "projectPath": "D:\\cibernética\\DominoGame-main\\juego\\juego.csproj",
       "packagesPath": "C:\\Users\\Shely\\.nuget\\packages\\",
-      "outputPath": "D:\\cibernética\\cibernética\\segundo\\programacionII\\proyecto\\Nueva carpeta\\DominoGame\\juego\\obj\\",
+      "outputPath": "D:\\cibernética\\DominoGame-main\\juego\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

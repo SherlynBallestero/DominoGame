@@ -34,3 +34,42 @@ D:\cibernética\cibernética\segundo\programacionII\proyecto\Nueva carpeta\Domin
 D:\cibernética\cibernética\segundo\programacionII\proyecto\Nueva carpeta\DominoGame\dominoclasico\obj\Debug\net6.0\ref\dominoclasico.dll
 D:\cibernética\cibernética\segundo\programacionII\proyecto\Nueva carpeta\DominoGame\dominoclasico\obj\Debug\net6.0\dominoclasico.pdb
 D:\cibernética\cibernética\segundo\programacionII\proyecto\Nueva carpeta\DominoGame\dominoclasico\obj\Debug\net6.0\dominoclasico.genruntimeconfig.cache
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.dll
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\obj\Debug\net6.0\ref\dominoclasico.dll
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.pdb
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\bin\Debug\net6.0\dominoclasico.exe
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\bin\Debug\net6.0\dominoclasico.deps.json
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\bin\Debug\net6.0\dominoclasico.runtimeconfig.json
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\bin\Debug\net6.0\dominoclasico.dll
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\bin\Debug\net6.0\ref\dominoclasico.dll
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\bin\Debug\net6.0\dominoclasico.pdb
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\bin\Debug\net6.0\juego.dll
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\bin\Debug\net6.0\juego.pdb
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.csproj.AssemblyReference.cache
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.AssemblyInfoInputs.cache
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.AssemblyInfo.cs
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.csproj.CoreCompileInputs.cache
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.csproj.CopyComplete
+C:\Users\Richard\Downloads\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.genruntimeconfig.cache
+F:\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.dll
+F:\DominoGame-main\dominoclasico\obj\Debug\net6.0\ref\dominoclasico.dll
+F:\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.pdb
+D:\cibernética\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.dll
+D:\cibernética\DominoGame-main\dominoclasico\obj\Debug\net6.0\ref\dominoclasico.dll
+D:\cibernética\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.pdb
+D:\cibernética\DominoGame-main\dominoclasico\bin\Debug\net6.0\dominoclasico.exe
+D:\cibernética\DominoGame-main\dominoclasico\bin\Debug\net6.0\dominoclasico.deps.json
+D:\cibernética\DominoGame-main\dominoclasico\bin\Debug\net6.0\dominoclasico.runtimeconfig.json
+D:\cibernética\DominoGame-main\dominoclasico\bin\Debug\net6.0\dominoclasico.dll
+D:\cibernética\DominoGame-main\dominoclasico\bin\Debug\net6.0\ref\dominoclasico.dll
+D:\cibernética\DominoGame-main\dominoclasico\bin\Debug\net6.0\dominoclasico.pdb
+D:\cibernética\DominoGame-main\dominoclasico\bin\Debug\net6.0\juego.dll
+D:\cibernética\DominoGame-main\dominoclasico\bin\Debug\net6.0\juego.pdb
+D:\cibernética\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.csproj.AssemblyReference.cache
+D:\cibernética\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.GeneratedMSBuildEditorConfig.editorconfig
+D:\cibernética\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.AssemblyInfoInputs.cache
+D:\cibernética\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.AssemblyInfo.cs
+D:\cibernética\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.csproj.CoreCompileInputs.cache
+D:\cibernética\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.csproj.CopyComplete
+D:\cibernética\DominoGame-main\dominoclasico\obj\Debug\net6.0\dominoclasico.genruntimeconfig.cache

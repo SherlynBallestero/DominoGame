@@ -22,3 +22,35 @@ D:\cibernética\cibernética\segundo\programacionII\proyecto\Nueva carpeta\Domin
 D:\cibernética\cibernética\segundo\programacionII\proyecto\Nueva carpeta\DominoGame\juego\obj\Debug\net6.0\juego.dll
 D:\cibernética\cibernética\segundo\programacionII\proyecto\Nueva carpeta\DominoGame\juego\obj\Debug\net6.0\ref\juego.dll
 D:\cibernética\cibernética\segundo\programacionII\proyecto\Nueva carpeta\DominoGame\juego\obj\Debug\net6.0\juego.pdb
+C:\Users\Richard\Downloads\DominoGame-main\juego\obj\Debug\net6.0\juego.csproj.AssemblyReference.cache
+C:\Users\Richard\Downloads\DominoGame-main\juego\obj\Debug\net6.0\juego.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Richard\Downloads\DominoGame-main\juego\obj\Debug\net6.0\juego.AssemblyInfoInputs.cache
+C:\Users\Richard\Downloads\DominoGame-main\juego\obj\Debug\net6.0\juego.AssemblyInfo.cs
+C:\Users\Richard\Downloads\DominoGame-main\juego\obj\Debug\net6.0\juego.csproj.CoreCompileInputs.cache
+C:\Users\Richard\Downloads\DominoGame-main\juego\obj\Debug\net6.0\juego.dll
+C:\Users\Richard\Downloads\DominoGame-main\juego\obj\Debug\net6.0\ref\juego.dll
+C:\Users\Richard\Downloads\DominoGame-main\juego\obj\Debug\net6.0\juego.pdb
+C:\Users\Richard\Downloads\DominoGame-main\juego\bin\Debug\net6.0\juego.deps.json
+C:\Users\Richard\Downloads\DominoGame-main\juego\bin\Debug\net6.0\juego.dll
+C:\Users\Richard\Downloads\DominoGame-main\juego\bin\Debug\net6.0\ref\juego.dll
+C:\Users\Richard\Downloads\DominoGame-main\juego\bin\Debug\net6.0\juego.pdb
+F:\DominoGame-main\juego\obj\Debug\net6.0\juego.csproj.AssemblyReference.cache
+F:\DominoGame-main\juego\obj\Debug\net6.0\juego.GeneratedMSBuildEditorConfig.editorconfig
+F:\DominoGame-main\juego\obj\Debug\net6.0\juego.AssemblyInfoInputs.cache
+F:\DominoGame-main\juego\obj\Debug\net6.0\juego.AssemblyInfo.cs
+F:\DominoGame-main\juego\obj\Debug\net6.0\juego.csproj.CoreCompileInputs.cache
+F:\DominoGame-main\juego\obj\Debug\net6.0\juego.dll
+F:\DominoGame-main\juego\obj\Debug\net6.0\ref\juego.dll
+F:\DominoGame-main\juego\obj\Debug\net6.0\juego.pdb
+D:\cibernética\DominoGame-main\juego\obj\Debug\net6.0\juego.csproj.AssemblyReference.cache
+D:\cibernética\DominoGame-main\juego\obj\Debug\net6.0\juego.GeneratedMSBuildEditorConfig.editorconfig
+D:\cibernética\DominoGame-main\juego\obj\Debug\net6.0\juego.AssemblyInfoInputs.cache
+D:\cibernética\DominoGame-main\juego\obj\Debug\net6.0\juego.AssemblyInfo.cs
+D:\cibernética\DominoGame-main\juego\obj\Debug\net6.0\juego.csproj.CoreCompileInputs.cache
+D:\cibernética\DominoGame-main\juego\obj\Debug\net6.0\juego.dll
+D:\cibernética\DominoGame-main\juego\obj\Debug\net6.0\ref\juego.dll
+D:\cibernética\DominoGame-main\juego\obj\Debug\net6.0\juego.pdb
+D:\cibernética\DominoGame-main\juego\bin\Debug\net6.0\juego.deps.json
+D:\cibernética\DominoGame-main\juego\bin\Debug\net6.0\juego.dll
+D:\cibernética\DominoGame-main\juego\bin\Debug\net6.0\ref\juego.dll
+D:\cibernética\DominoGame-main\juego\bin\Debug\net6.0\juego.pdb

@@ -33,11 +33,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\cibernética\\cibernética\\segundo\\programacionII\\proyecto\\Nueva carpeta\\DominoGame\\dominoclasico\\dominoclasico.csproj",
+      "projectUniqueName": "D:\\cibernética\\DominoGame-main\\dominoclasico\\dominoclasico.csproj",
       "projectName": "dominoclasico",
-      "projectPath": "D:\\cibernética\\cibernética\\segundo\\programacionII\\proyecto\\Nueva carpeta\\DominoGame\\dominoclasico\\dominoclasico.csproj",
+      "projectPath": "D:\\cibernética\\DominoGame-main\\dominoclasico\\dominoclasico.csproj",
       "packagesPath": "C:\\Users\\Shely\\.nuget\\packages\\",
-      "outputPath": "D:\\cibernética\\cibernética\\segundo\\programacionII\\proyecto\\Nueva carpeta\\DominoGame\\dominoclasico\\obj\\",
+      "outputPath": "D:\\cibernética\\DominoGame-main\\dominoclasico\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -55,8 +55,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\cibernética\\cibernética\\segundo\\programacionII\\proyecto\\Nueva carpeta\\DominoGame\\juego\\juego.csproj": {
-              "projectPath": "D:\\cibernética\\cibernética\\segundo\\programacionII\\proyecto\\Nueva carpeta\\DominoGame\\juego\\juego.csproj"
+            "D:\\cibernética\\DominoGame-main\\juego\\juego.csproj": {
+              "projectPath": "D:\\cibernética\\DominoGame-main\\juego\\juego.csproj"
             }
           }
         }

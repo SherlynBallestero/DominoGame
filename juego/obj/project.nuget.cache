@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LsMwbVRR7uCqwgy7QAd9iHtJyImsJDCrnRCtdndhsnmqTbTXUuJSvPodSw/T7rSpWiU8scjNQHgub25c0YYyng==",
+  "dgSpecHash": "9Q3tkjqtlKQGFLQMjDX900T+rkcxAZ8pN5iY1G557JjmhrOqqr5q49bb3eug5i2xYViY2b3X6ugOURvt/7gRMQ==",
   "success": true,
-  "projectFilePath": "D:\\cibernética\\cibernética\\segundo\\programacionII\\proyecto\\Nueva carpeta\\DominoGame\\juego\\juego.csproj",
+  "projectFilePath": "D:\\cibernética\\DominoGame-main\\juego\\juego.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
