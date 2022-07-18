@@ -10,7 +10,7 @@ public class clasicWinner : IWinner
         double min = (double)int.MaxValue;
         double aux = 0;
         //Player playerW = new Player("this is for aux");
-        string winner="";
+        string winner = "";
         foreach (var item in referee.AsignedRecords.Keys)
         {
             if (referee.AsignedRecords[item].Count != 0)
@@ -22,7 +22,7 @@ public class clasicWinner : IWinner
                 if (aux < min)
                 {
                     min = aux;
-                    winner= item.id;
+                    winner = item.id;
                 }
             }
             else
@@ -45,12 +45,12 @@ public class clasicWinner : IWinner
 ///</summary>
 public class Winner : IWinner
 {
-    
+
     public string Win(Referee referee, GameInformation gm)
     {
         double max = (double)int.MinValue;
         double aux = 0;
-        string winner="";
+        string winner = "";
         foreach (var item in referee.AsignedRecords.Keys)
         {
             if (referee.AsignedRecords[item].Count != 0)
@@ -59,7 +59,7 @@ public class Winner : IWinner
                 {
                     aux += gm.weight(item2);
                 }
-                aux=aux*referee.AsignedRecords[item].Count;
+                aux = aux * referee.AsignedRecords[item].Count;
                 if (aux > max)
                 {
                     max = aux;
@@ -90,9 +90,9 @@ public class Winner : IWinner
 public class clasicEnd : IFinalized
 {
     public match match;
-    public  clasicEnd(match match)
+    public clasicEnd(match match)
     {
-        this.match=match;
+        this.match = match;
     }
     public bool EndGame(GameInformation gm, Referee rf, ref int max)
     {
@@ -109,7 +109,7 @@ public class clasicEnd : IFinalized
             foreach (var item2 in rf.AsignedRecords[item])
             {
                 //paseando por la lista de fichas que tiene asignado el jugador correspondiente con item
-                if (gm.OptionsToPlay[0].option!=item2.element1 && gm.OptionsToPlay[0].option!=item2.element2 && gm.OptionsToPlay[1].option!=item2.element1 && gm.OptionsToPlay[1].option!=item2.element2)
+                if (gm.OptionsToPlay[0].option != item2.element1 && gm.OptionsToPlay[0].option != item2.element2 && gm.OptionsToPlay[1].option != item2.element1 && gm.OptionsToPlay[1].option != item2.element2)
                 {
                     //verificando si el jugador contiene fichas validas para el juego.
                     aux2++;
@@ -134,9 +134,9 @@ public class clasicEnd : IFinalized
 public class EndGameAbovePoints : IFinalized
 {
     public match match;
-    public  EndGameAbovePoints(match match)
+    public EndGameAbovePoints(match match)
     {
-        this.match=match;
+        this.match = match;
     }
     //cosas para cambiar en este metodo: pasar weight en el contructor de gameInf para no tener que pasarselo ni a este
     //metodo ni a win, calcular el random una unica vez y que no varie
@@ -148,7 +148,7 @@ public class EndGameAbovePoints : IFinalized
         int count = 0;
         foreach (var item in referee.AsignedRecords.Keys)
         {
-            if (referee.HavesARecord(referee,gm, item,match)) count++;
+            if (referee.HavesARecord(referee, gm, item, match)) count++;
         }
         if (count == 0) return true;
         if (max == 0)
@@ -176,16 +176,16 @@ public class EndGameAbovePoints : IFinalized
 //asegurarme que siempre se le pase a la clase validator un match en el constructor,analizar si es estrictamente
 public class validator : IValidator
 {
-     public match match;
-    public  validator(match match)
+    public match match;
+    public validator(match match)
     {
-        this.match=match;
+        this.match = match;
     }
     public bool ValidPlay(jugada jugada, GameInformation gi)
     {
         if (gi.OptionsToPlay.Count == 0) return true;
         //arreglar el match q no sea tan grande
-        return (match(gi.OptionsToPlay[jugada.position % 2].records,gi.OptionsToPlay[jugada.position % 2].option,jugada.record, jugada.record.element1) || match(gi.OptionsToPlay[jugada.position % 2].records,gi.OptionsToPlay[jugada.position % 2].option,jugada.record, jugada.record.element2));
+        return (match(gi.OptionsToPlay[jugada.position % 2].records, gi.OptionsToPlay[jugada.position % 2].option, jugada.record, jugada.record.element1, gi.RecordsInGame) || match(gi.OptionsToPlay[jugada.position % 2].records, gi.OptionsToPlay[jugada.position % 2].option, jugada.record, jugada.record.element2, gi.RecordsInGame));
     }
 }
 ///jugada valida cuando la ficha jugada tenga un peso par si una nueva ficha dada por las dos caras correspondiente
@@ -194,19 +194,19 @@ public class validator : IValidator
 public class validatorEvenOdd : IValidator
 {
     public match match;
-    public  validatorEvenOdd(match match)
+    public validatorEvenOdd(match match)
     {
-        this.match=match;
+        this.match = match;
     }
 
     public bool ValidPlay(jugada jugada, GameInformation gi)
     {
         //nueva ficha dada por la union de las caras opciones de juego y su peso correspondiente.
-        
-        int weightAux = gi.weight(gi.OptionsToPlay[jugada.position%2].records);
 
-        bool match1 = match(gi.OptionsToPlay[jugada.position % 2].records,gi.OptionsToPlay[jugada.position % 2].option,jugada.record, jugada.record.element1);
-        bool match2 = match(gi.OptionsToPlay[jugada.position % 2].records,gi.OptionsToPlay[jugada.position % 2].option,jugada.record, jugada.record.element2);
+        int weightAux = gi.weight(gi.OptionsToPlay[jugada.position % 2].records);
+
+        bool match1 = match(gi.OptionsToPlay[jugada.position % 2].records, gi.OptionsToPlay[jugada.position % 2].option, jugada.record, jugada.record.element1, gi.RecordsInGame);
+        bool match2 = match(gi.OptionsToPlay[jugada.position % 2].records, gi.OptionsToPlay[jugada.position % 2].option, jugada.record, jugada.record.element2, gi.RecordsInGame);
         if (gi.OptionsToPlay.Count == 0) return true;
         if (match1 || match2)
         {
@@ -316,7 +316,7 @@ public class shuffler2 : IShuffler
             {
                 if ((item.element1 + item.element2) % 2 != 0)
                 {
-                   if (!used.Contains(item))
+                    if (!used.Contains(item))
                     {
                         rf.AsignedRecords[player].Add(item);
                         limit++;
@@ -340,7 +340,6 @@ public class shuffler2 : IShuffler
 
 #endregion
 #region Turno
-
 
 public class TurnPlayerClassic : ITurnPlayer
 {
@@ -387,6 +386,233 @@ public class TurnPlayerRepeatPlay : ITurnPlayer
         }
 
         turns[stop] = change;
+    }
+}
+#endregion
+public class makerRecords : IMakerRecords
+{
+    public List<Records> MakingRecords(int cant)
+    {
+        List<Records> records = new List<Records>();
+        for (int i = 0; i < cant; i++)
+        {
+            for (int j = i; j < cant; j++)
+            {
+
+                records.Add(new Records(new List<int>() { i, j }));
+            }
+        }
+        Random random = new Random();
+        int n = records.Count;
+        while (n > 1)
+        {
+            n--;
+            int i = random.Next(n + 1);
+            Records temp = records[i];
+            records[i] = records[n];
+            records[n] = temp;
+        }
+        return records;
+    }
+}
+#region TicTacToe
+public class PrienterTictactoe : IPrinter
+{
+
+    public void Print(GameInformation gm, Referee referee, int cant, Player[] players)
+    {
+        List<Records> records = gm.makerRecords.MakingRecords(cant);
+        string answer = "";
+        int count = 1;
+        
+        foreach (var item in records)
+        {
+            if (!(gm.turnPlayed is null) && gm.turnPlayed.Count != 0)
+            {
+                bool change=false;
+                if (gm.turnPlayed.ContainsKey(players[0]))
+                {
+                    if (gm.turnPlayed[players[0]].Any(x => x.record.element1 == item.element1 && x.record.element2 == item.element2)){
+                    answer += "O ";
+                    change=true;
+                        
+                    } 
+
+                }
+                if (gm.turnPlayed.ContainsKey(players[1]))
+                {
+                    if (gm.turnPlayed[players[1]].Any(x => x.record.element1 == item.element1 && x.record.element2 == item.element2)) answer += "X ";
+                    else if (!change)answer+="- ";
+                }
+
+            }
+            else
+            {
+                answer += "- ";
+            }
+            count++;
+            if (count == 4)
+            {
+                System.Console.WriteLine(answer);
+                System.Console.WriteLine("");
+                answer = "";
+                count = 1;
+            }
+
+        }
+    }
+}
+public class TurnFort : ITurnPlayer
+{
+    public void Turn(int[] turns, int ind)
+    {
+        if (ind % 2 == 0)
+        {
+            int aux = turns[0];
+            turns[0] = turns[1];
+            turns[1] = aux;
+        }
+    }
+}
+public class ValidPlatT : IValidator
+{
+    public bool ValidPlay(jugada jugada, GameInformation gi)
+    {
+        throw new NotImplementedException();
+    }
+}
+public class WinnerT : IWinner
+{
+    public Dictionary<string, List<List<Records>>> winnersRecords = new Dictionary<string, List<List<Records>>>();
+    public void CreaterWinner(GameInformation gm, int cant)
+    {
+        List<Records> records = gm.makerRecords.MakingRecords(cant);
+        List<List<Records>> aux = new List<List<Records>>();
+        //agregando filas ganadoras...
+        foreach (var item in OrdenFile(records, cant))
+        {
+            aux.Add(item.ToList());
+        }
+        winnersRecords.Add("files", aux);
+        //agregando columnas ganadoras...
+        aux = new List<List<Records>>();
+        foreach (var item in OrdenRow(records, cant))
+        {
+            aux.Add(item.ToList());
+        }
+        winnersRecords.Add("Row", aux);
+        //agregando diagonal...
+        aux = new List<List<Records>>();
+        aux.Add(new List<Records> { records[0], records[4], records[8] });
+
+        winnersRecords.Add("diagonal", aux);
+
+    }
+    //filas
+    public IEnumerable<IEnumerable<Records>> OrdenFile(List<Records> records, int cant)
+    {
+        for (int i = 0; i < cant; i++)
+        {
+            yield return records.Skip(i * cant).Take(cant + i);
+        }
+
+    }
+    //columnas
+    public IEnumerable<IEnumerable<Records>> OrdenRow(List<Records> records, int cant)
+    {
+        List<Records> row1 = new List<Records>();
+        List<Records> row2 = new List<Records>();
+        List<Records> row3 = new List<Records>();
+        for (int i = 0; i < records.Count; i++)
+        {
+            if (i % 3 == 0) row1.Add(records[i]);
+            else if (i % 3 == 1) row2.Add(records[i]);
+            else row3.Add(records[i]);
+        }
+        yield return row1;
+        yield return row2;
+        yield return row3;
+
+    }
+
+    public string Win(Referee referee, GameInformation gm)
+    {
+
+        if (winnersRecords.Count == 0)
+        {
+            CreaterWinner(gm, 3);
+        }
+        //Localizando fichas jugadas por cada jugador...
+        List<Records> PlayedX = new List<Records>();
+        List<Records> PlayedO = new List<Records>();
+        bool aux = false;
+        if (gm.turnPlayed is null) return "Tabla";
+
+        foreach (var item in gm.turnPlayed.Keys)
+        {
+            foreach (var item2 in gm.turnPlayed[item])
+            {
+                if (!aux)
+                {
+                    PlayedX.Add(item2.record);
+                }
+                else
+                {
+                    PlayedO.Add(item2.record);
+                }
+            }
+            aux = true;
+        }
+        //Verificando si alguno de los jugadores contienen las jugadas ganadoras...
+        foreach (var item in winnersRecords.Keys)
+        {
+            foreach (var item2 in winnersRecords[item])
+            {
+                if (item2.All(x => PlayedX.Any(y => y.element1 == x.element1 && y.element2 == x.element2))) return "X";
+                if (item2.All(x => PlayedO.Any(y => y.element1 == x.element1 && y.element2 == x.element2))) return "O";
+
+            }
+        }
+        return "Tabla";
+
+    }
+}
+public class EndT : IFinalized
+{
+    public bool EndGame(GameInformation gm, Referee referee, ref int max)
+    {
+
+        if (referee.Winner.Win(referee, gm) != "Tabla") return true;
+
+        foreach (var item in referee.AsignedRecords.Keys)
+        {
+            if (referee.AsignedRecords[item].Count != 0) return false;
+        }
+        return true;
+
+    }
+}
+public class makerRecordsT : IMakerRecords
+{
+    public List<Records> MakingRecords(int cant)
+    {
+        List<Records> records = new List<Records>();
+        for (int i = 0; i < cant; i++)
+        {
+            for (int j = 0; j < cant; j++)
+            {
+
+                records.Add(new Records(new List<int>() { i, j }));
+            }
+        }
+        return records;
+    }
+}
+public class shufflerT : IShuffler
+{
+    public void Shuffle(Player player, GameInformation gi, ref int index, Referee rf, [Optional] int cant)
+    {
+        rf.AsignedRecords.Add(player, gi.makerRecords.MakingRecords(cant));
     }
 }
 #endregion

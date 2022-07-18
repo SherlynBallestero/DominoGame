@@ -20,8 +20,9 @@ public class ManualPlayer : Player
             System.Console.WriteLine(item.Item2 + " option# " + cont++);
         }
         Console.ForegroundColor = ConsoleColor.Gray;
+      
         cont = 0;
-        System.Console.WriteLine("select a record to play");
+        System.Console.WriteLine("selecciona una ficha para jugar");
         foreach (var item in info.matchedRec)
         {
             System.Console.WriteLine(cont + " " + item.rcd.element1 + "-" + item.rcd.element2);
@@ -29,7 +30,7 @@ public class ManualPlayer : Player
         }
 
         int answer = int.Parse(Console.ReadLine());
-        System.Console.WriteLine("where do you want to play?");
+        System.Console.WriteLine("Por donde quieres jugar?");
         int selectedOption = int.Parse(Console.ReadLine());
         return new jugada(selectedOption, info.matchedRec[answer].rcd);
 

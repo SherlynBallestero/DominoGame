@@ -13,11 +13,12 @@ public class Referee
     public IShuffler shuffler;
 
     public int numberOfOptions;
+    public ITurnPlayer turnPlayer;
     //almacenar las fichas repartidas a cada jugador por torneo 
     public Dictionary<Player, List<Records>> AsignedRecords { get; set; }
 
     //constructor....
-    public Referee(int numberOfOptions, IFinalized finalized, IWinner Winner, IValidator validator, IShuffler shuffler)
+    public Referee(int numberOfOptions, IFinalized finalized, IWinner Winner, IValidator validator, IShuffler shuffler, ITurnPlayer turnPlayer)
     {
         this.numberOfOptions = numberOfOptions;
         this.AsignedRecords = new Dictionary<Player, List<Records>>();
@@ -25,34 +26,9 @@ public class Referee
         this.Winner = Winner;
         this.validator = validator;
         this.shuffler = shuffler;
+        this.turnPlayer=turnPlayer;
     }
 
-
-    ///<summary>
-    ///Dado el jugador actual me dice a quien le toca
-    ///y asociar el orden en que jugara cada uno. 
-    //por ahora este metodo es inutil
-    ///</summary>
-    public Player NextTurn(Player actualPlayer)
-    {
-        bool aux = false;
-        foreach (var item in AsignedRecords.Keys)
-        {
-            if (aux) return item;
-            if (item == actualPlayer)
-            {
-                aux = true;
-            }
-        }
-
-        Player auxplayer = actualPlayer;
-        foreach (var item in AsignedRecords.Keys)
-        {
-            auxplayer = item; break;
-        }
-        return auxplayer;
-
-    }
 
     ///<summary>
     /// Esta funcion hace una jugada a partir de la jugada retornada por el player,o sea hace los cambios adecuados,como 
@@ -66,7 +42,7 @@ public class Referee
             //si hay fichas hay opciones en las que jugar, si no es libre de jugar cualquier ficha sin importar que opcion
             //sea seleccionada por el jugador
 
-            if (match(gi.OptionsToPlay[jugada.position % 2].records, gi.OptionsToPlay[jugada.position % 2].option, jugada.record, jugada.record.element1))
+            if (match(gi.OptionsToPlay[jugada.position % 2].records, gi.OptionsToPlay[jugada.position % 2].option, jugada.record, jugada.record.element1,gi.RecordsInGame))
             {
                 //la opcion de jugar ofrecida por el arbitro es movida de acuerdo a cual de los lados de la ficha machee
                 //o sea es removida la opcion que el jugador seleccopnes garantizada que es valida por el arbitro,pero por ejemplo 
@@ -76,7 +52,7 @@ public class Referee
                 gi.OptionsToPlay.Add(t);
                 gi.RecordsInGame.Add(jugada.record);
             }
-            else if (match(gi.OptionsToPlay[jugada.position % 2].records, gi.OptionsToPlay[jugada.position % 2].option, jugada.record, jugada.record.element2))
+            else if (match(gi.OptionsToPlay[jugada.position % 2].records, gi.OptionsToPlay[jugada.position % 2].option, jugada.record, jugada.record.element2,gi.RecordsInGame))
             {
                 (Records, int) t = (jugada.record, jugada.record.element1);
                 gi.OptionsToPlay.Remove(gi.OptionsToPlay[jugada.position % 2]);
@@ -99,7 +75,7 @@ public class Referee
         {
             //paseando por la lista de fichas que tiene asignado el jugador correspondiente con item
             //arreglar esto q esta muy feo
-            if (!match(gm.OptionsToPlay[0].records, gm.OptionsToPlay[0].option, item, item.element1) && !match(gm.OptionsToPlay[1].records, gm.OptionsToPlay[1].option, item, item.element1) && !match(gm.OptionsToPlay[0].records, gm.OptionsToPlay[0].option, item, item.element2) && !match(gm.OptionsToPlay[1].records, gm.OptionsToPlay[1].option, item, item.element2))
+            if (!match(gm.OptionsToPlay[0].records, gm.OptionsToPlay[0].option, item, item.element1,gm.RecordsInGame) && !match(gm.OptionsToPlay[1].records, gm.OptionsToPlay[1].option, item, item.element1,gm.RecordsInGame) && !match(gm.OptionsToPlay[0].records, gm.OptionsToPlay[0].option, item, item.element2,gm.RecordsInGame) && !match(gm.OptionsToPlay[1].records, gm.OptionsToPlay[1].option, item, item.element2,gm.RecordsInGame))
             {
                 //verificando si el jugador contiene fichas validas para el juego.
                 aux2++;
@@ -140,7 +116,7 @@ public class Referee
             records.Add((item, weight(item)));
             if(gm.OptionsToPlay.Count!=0){
 
-            if (match(gm.OptionsToPlay[0].records, gm.OptionsToPlay[0].option, item, item.element1) || match(gm.OptionsToPlay[0].records, gm.OptionsToPlay[0].option, item, item.element2) || match(gm.OptionsToPlay[1].records, gm.OptionsToPlay[1].option, item, item.element1) || match(gm.OptionsToPlay[1].records, gm.OptionsToPlay[1].option, item, item.element2))
+            if (match(gm.OptionsToPlay[0].records, gm.OptionsToPlay[0].option, item, item.element1,gm.RecordsInGame) || match(gm.OptionsToPlay[0].records, gm.OptionsToPlay[0].option, item, item.element2,gm.RecordsInGame) || match(gm.OptionsToPlay[1].records, gm.OptionsToPlay[1].option, item, item.element1,gm.RecordsInGame) || match(gm.OptionsToPlay[1].records, gm.OptionsToPlay[1].option, item, item.element2,gm.RecordsInGame))
             {
                 matchedRec.Add((item,weight(item)));
             }
