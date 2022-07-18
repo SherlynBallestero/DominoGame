@@ -1,5 +1,6 @@
 # DominoGame
 
+![](index.jpg)
 ## General
 
 El  dominó es un juego de mesa surgido en China hace miles de años a partie de los  dados con seis caras y se han creado diversas variantes del juego mediante la adaptación de sus reglas. El modo clásico de juego conocido en Cuba inicia cuando los jugadores reciben sus fichas y en un orden elegido cada uno pone por turno una ficha, si las lleva, donde el primero en vaciar la mano gana, si el juego se tranca, como se conoce cuando ningún jugador contiene en su mano fichas que se puedan enlazar con las opciones que hay en la mesa, se determina quien ganó de acuerdo con la regla asociado a ello, normalmente sería quien menos puntos acumule en su mano. 
