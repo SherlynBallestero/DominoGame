@@ -2,7 +2,7 @@
 
 ## General
 
-El  dominó es un juego de mesa surgido en China hace miles de años a partie de los  dados con seis caras y se han creado diversas variantes del juego mediante la adaptación de sus reglas. El modo clásico de juego conocido en Cuba inicia cuando los jugadores reciben sus fichas y en un orden elegido cada uno pone por turno una ficha, si las lleva, donde el primero en vaciar la mano gana, si el juego se tranca, como se conoce cuando ningún jugador contiene en su mano fichas que se puedan enlazar con las opciones que hay en la mesa, se determina quien ganó de acuerdo con la regla asociado a ello, normalmente serría quien menos puntos acumule en su mano. 
+El  dominó es un juego de mesa surgido en China hace miles de años a partie de los  dados con seis caras y se han creado diversas variantes del juego mediante la adaptación de sus reglas. El modo clásico de juego conocido en Cuba inicia cuando los jugadores reciben sus fichas y en un orden elegido cada uno pone por turno una ficha, si las lleva, donde el primero en vaciar la mano gana, si el juego se tranca, como se conoce cuando ningún jugador contiene en su mano fichas que se puedan enlazar con las opciones que hay en la mesa, se determina quien ganó de acuerdo con la regla asociado a ello, normalmente sería quien menos puntos acumule en su mano. 
 
 Dominos Game es una implementación basada en la idea general de este juego común, en el que se le da al usuario la  oportunidad  de decidir con que reglas quiere jugar. Además se crea con la idea de poder implementar nuevas variaciones de juegos cuando sea conveniente, de modo que la flexibilidad de la estructura permita hacer cambios sin afectar o tener si quiera que entender mucho sobre la implementación inicial. 
 Por lo general  los aspectos variantes de un tipo de dominó a otro, así como de casi cualquier juego de mesa, vienen dados por reglas. Estas reglas suelen ser:
@@ -28,7 +28,7 @@ Asi se garantiza que dado un repartidor determinado que debe implementa IShuffle
  
  *shuffler1:*
  
- shuffler1 es una implementación del repartidor clásico. Dado un jugador, la información del juego y el índice correspondiente a la última ficha repartida del maso, asigna a cada jugador la cantidad correspondiente de fichas con la opción de dominó que se juega, en el caso de ser el dómino de 9 se le asignan 10 como se hace de forma convencional en el juego clásico. 
+ shuffler1 es una implementación del repartidor clásico. Dado un jugador, la información del juego y el índice correspondiente a la última ficha repartida del maso, asigna a cada jugador la cantidad debida de fichas con la opción de dominó que se juega, en el caso de ser el dómino de 9 se le asignan 10 como se hace de forma convencional en el juego clásico. 
 ```cs
 
 public class shuffler1 : IShuffler
@@ -45,7 +45,7 @@ public class shuffler1 : IShuffler
  
   *shuffler2:*
   
-  En esta variación se emplea  la paridad, en el sentido si esta este jugador tiene un índice par, cuando se le reparte o repartió el repartidor habían repartido un número impar de veces hasta el momento entonces se le asignara entre sus fichas una suma total de puntos que corresponda con dicha paridad.
+  En esta variación se emplea  la paridad, en el sentido de que si este jugador tiene un índice par, cuando se le asiganan las fichas, el repartidor habían repartido un número impar de veces hasta el momento entonces se le entregará entre sus fichas una suma total de puntos que corresponda con dicha paridad.
  
 #### Finalización 
  
