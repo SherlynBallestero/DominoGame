@@ -20,7 +20,7 @@ public class ManualPlayer : Player
             System.Console.WriteLine(item.Item2 + " option# " + cont++);
         }
         Console.ForegroundColor = ConsoleColor.Gray;
-      
+
         cont = 0;
         System.Console.WriteLine("selecciona una ficha para jugar");
         foreach (var item in info.matchedRec)
@@ -28,10 +28,21 @@ public class ManualPlayer : Player
             System.Console.WriteLine(cont + " " + item.rcd.element1 + "-" + item.rcd.element2);
             cont++;
         }
-
-        int answer = int.Parse(Console.ReadLine());
+        string aux = Console.ReadLine();
+        int answer = 0;
+        while (!int.TryParse(aux, out answer))
+        {
+            System.Console.WriteLine("Debe elegir un número");
+            aux = System.Console.ReadLine();
+        }
         System.Console.WriteLine("Por donde quieres jugar?");
-        int selectedOption = int.Parse(Console.ReadLine());
+        int selectedOption =0;
+         aux = System.Console.ReadLine();
+        while (!int.TryParse(aux, out selectedOption))
+        {
+            System.Console.WriteLine("Debe elegir un número");
+            aux = System.Console.ReadLine();
+        }
         return new jugada(selectedOption, info.matchedRec[answer].rcd);
 
     }
@@ -117,20 +128,24 @@ public class DataPlayer : GreedyPlayer
     public override jugada GiveMeRecords(InformationForPlayer info, Referee referee)
     {
         bool[] mark = MarkData(info.records);
-        Random r= new Random();
-        int option =0;
+        Random r = new Random();
+        int option = 0;
         for (int i = 0; i < mark.Length; i++)
         {
             if (IsIn(info.records[i].rcd, info.matchedRec) && mark[i])
-            {   option= r.Next(0,2);
-                return new jugada(option, info.records[i].rcd); }
+            {
+                option = r.Next(0, 2);
+                return new jugada(option, info.records[i].rcd);
+            }
             //{return new jugada(FindOption(info.records[i].rcd,info.Options,info),info.records[i].rcd);}
         }
         for (int i = 0; i < mark.Length; i++)
         {
             if (IsIn(info.records[i].rcd, info.matchedRec) && !mark[i])
-            {   option= r.Next(0,2);
-                return new jugada(option, info.records[i].rcd); }
+            {
+                option = r.Next(0, 2);
+                return new jugada(option, info.records[i].rcd);
+            }
 
             //    {return new jugada(FindOption(info.records[i].rcd,info.Options,info),info.records[i].rcd);}
         }
