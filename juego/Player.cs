@@ -22,7 +22,9 @@ public class ManualPlayer : Player
         Console.ForegroundColor = ConsoleColor.Gray;
 
         cont = 0;
+        Console.ForegroundColor = ConsoleColor.Cyan;
         System.Console.WriteLine("selecciona una ficha para jugar");
+        Console.ForegroundColor = ConsoleColor.Gray;
         foreach (var item in info.matchedRec)
         {
             System.Console.WriteLine(cont + " " + item.rcd.element1 + "-" + item.rcd.element2);
@@ -35,15 +37,41 @@ public class ManualPlayer : Player
             System.Console.WriteLine("Debe elegir un número");
             aux = System.Console.ReadLine();
         }
-        System.Console.WriteLine("Por donde quieres jugar?");
-        int selectedOption =0;
-         aux = System.Console.ReadLine();
-        while (!int.TryParse(aux, out selectedOption))
+        //que sea automatica la jugada cuando no hay que decidir
+        if (info.Options.Count>=1 && info.Options != null)
         {
-            System.Console.WriteLine("Debe elegir un número");
-            aux = System.Console.ReadLine();
+
+            Records auxRecord = new Records(new List<int> { info.Options[0].Item2, info.Options[1].Item2 });
+            Records move = info.matchedRec[answer].rcd;
+            int selectedOption = 0;
+            if ((auxRecord.element1 == move.element1 && auxRecord.element2 == move.element2) || auxRecord.element1 == move.element2 && auxRecord.element2 == move.element1)
+            {
+
+                System.Console.WriteLine("Por donde quieres jugar?");
+                aux = System.Console.ReadLine();
+                while (!int.TryParse(aux, out selectedOption))
+                {
+                    System.Console.WriteLine("Debe elegir un número");
+                    aux = System.Console.ReadLine();
+                }
+                return new jugada(selectedOption, info.matchedRec[answer].rcd);
+            }
+            else
+            {
+
+                Random r1 = new Random();
+                selectedOption = r1.Next(0, 2);
+                return new jugada(selectedOption, info.matchedRec[answer].rcd);
+            }
         }
-        return new jugada(selectedOption, info.matchedRec[answer].rcd);
+        else
+        {
+            int selectedOption = 0;
+            Random r1 = new Random();
+            selectedOption = r1.Next(0, 2);
+            return new jugada(selectedOption, info.matchedRec[answer].rcd);
+        }
+
 
     }
 }

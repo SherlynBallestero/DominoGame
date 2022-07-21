@@ -24,15 +24,15 @@ public class Program
     public static void WaysToPLay1()
     {
         Console.ForegroundColor = ConsoleColor.DarkCyan;
-        System.Console.WriteLine( "Instrucciones" );
+        System.Console.WriteLine("Instrucciones");
         Console.ForegroundColor = ConsoleColor.DarkMagenta;
-        System.Console.WriteLine( "1)Las opciones de juego son el lado de la mesa por las que puede seleccionar jugar" );
-        System.Console.WriteLine( "Si selecciona opción 0 jugará por la 1ra y 1 por la 2da" );
-        System.Console.WriteLine( "Podrá observar mientras juega todas sus fichas, pero solo podrá seleccionar de entre las fichas que son posible jugar, dada las condiciones");
-        System.Console.WriteLine( "de enlace de una ficha a otra");
+        System.Console.WriteLine("1)Las opciones de juego son el lado de la mesa por las que puede seleccionar jugar");
+        System.Console.WriteLine("Si selecciona opción 0 jugará por la 1ra y 1 por la 2da");
+        System.Console.WriteLine("Podrá observar mientras juega todas sus fichas, pero solo podrá seleccionar de entre las fichas que son posible jugar, dada las condiciones");
+        System.Console.WriteLine("de enlace de una ficha a otra");
         System.Console.WriteLine("Espero que lo disfrute:)");
         Console.ForegroundColor = ConsoleColor.Gray;
-        
+
         bool keepPlaying = true;
         while (keepPlaying)
         {
@@ -67,8 +67,12 @@ public class Program
             int index = 0;
             DealRecords(challengers, index, referee, gi);
             int max = 0;
+            LinkedList<Records> table = new LinkedList<Records>();
+            IPrinter p = new PrinterDomino(table);
             while (!referee.finalized.EndGame(gi, referee, ref max))
             {
+
+                p.Print(gi, referee, 0);
                 //caminando por cada jugador siempre que el juego no haya acabado
                 foreach (Player item in referee.AsignedRecords.Keys)
                 {
@@ -76,16 +80,21 @@ public class Program
                     //verificar que el jugador no se pase
                     if (referee.HavesARecord(referee, gi, item, match))
                     {
-
+                        //información del estado actual del juego que se le dará al jugador.
                         InformationForPlayer info = referee.ProvidedInformation(referee, gi, item, match, gi.weight);
+                        //mostrando fichas del jugador
+                        Console.ForegroundColor = ConsoleColor.Cyan;
                         System.Console.WriteLine("Fichas del jugador " + item.id);
+                        Console.ForegroundColor = ConsoleColor.Gray;
                         foreach (var item2 in referee.AsignedRecords[item])
                         {
                             System.Console.WriteLine(item2.element1 + "/" + item2.element2);
                         }
                         jugada jugadaAux = item.GiveMeRecords(info, referee);
+
                         while (!referee.validator.ValidPlay(jugadaAux, gi))
                         {
+
                             if (item is ManualPlayer)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
@@ -104,7 +113,25 @@ public class Program
                                 Console.ForegroundColor = ConsoleColor.Gray;
                             }
                         }
+                        Console.ForegroundColor = ConsoleColor.Cyan;
                         System.Console.WriteLine("Jugador " + item.id + " ha jugado: " + jugadaAux.record.element1 + " " + jugadaAux.record.element2);
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        System.Console.WriteLine("");
+                        //actualizando la mesa para que sea pintada...
+
+                        if (table is null || table.Count == 0) table.AddFirst(jugadaAux.record);
+                        else
+                        {
+                            if (gi.OptionsToPlay[jugadaAux.position].option == table.Last.Value.element1 || gi.OptionsToPlay[jugadaAux.position].option == table.Last.Value.element2)
+                            {
+                                table.AddLast(jugadaAux.record);
+                            }
+                            else
+                            {
+                                table.AddFirst(jugadaAux.record);
+                            }
+                        }
+                        //actualizando estado...
                         referee.Play(jugadaAux, gi, new match(delegate (Records records1, int optionRecords1, Records records2, int optionRecord2, List<Records> records) { return optionRecords1 == optionRecord2; }));
                         referee.AsignedRecords[item].Remove(jugadaAux.record);
                     }
@@ -116,14 +143,21 @@ public class Program
 
                     }
                 }
+                //agregado para que puedas observar la jugada en el turno
+                System.Console.WriteLine("Presione Enter para continuar....");
+                Console.ReadLine();
+                Console.Clear();
 
             }
-
+            Console.ForegroundColor = ConsoleColor.Magenta;
             System.Console.WriteLine("Se termino el juego");
+            Console.ForegroundColor = ConsoleColor.Gray;
             referee.Winner.Win(referee, gi);
             string answer = " ";
+            Console.ForegroundColor = ConsoleColor.Magenta;
             System.Console.WriteLine("Quiere hacer nueva partida? Si:2,No:1");
-           
+            Console.ForegroundColor = ConsoleColor.Gray;
+
             while (answer[0] != '1' && answer[0] != '2')
             {
                 answer = Console.ReadLine();

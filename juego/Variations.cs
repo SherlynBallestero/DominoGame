@@ -389,6 +389,23 @@ public class TurnPlayerRepeatPlay : ITurnPlayer
     }
 }
 #endregion
+public class PrinterDomino : IPrinter
+{
+   public  LinkedList<Records> table=new LinkedList<Records>();
+    public PrinterDomino(LinkedList<Records> table)
+    {
+        this.table=table;
+    }
+    public void Print(GameInformation gm, Referee referee, int cant, Player[] players)
+    {
+       string tableAnswer="";
+       foreach (var item in table)
+       {
+          tableAnswer+= "["+ item.element1+"/"+ item.element2+"]-";
+       }
+       System.Console.WriteLine(tableAnswer);
+    }
+}
 public class makerRecords : IMakerRecords
 {
     public List<Records> MakingRecords(int cant)

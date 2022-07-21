@@ -36,5 +36,5 @@ public interface IShuffler
 }
 public interface IPrinter
 {
-    public void Print(GameInformation gm, Referee referee, int cant,Player[] players);
+    public void Print(GameInformation gm, Referee referee, int cant,params Player[] players);
 }
