@@ -146,3 +146,5 @@ Las siguientes clases son empleadas en esta implementación:
  Por medio de `Play`  hace los cambios a partir de la jugada del jugador, como registrar en  GameInformetion las nuevas opciones de juego y agregar al tablero la ficha en la posición indicada por el jugador.
  Con ` HavesARecord`  determina si un jugador  contiene alguna ficha en su mano que pueda enlazarse con las fichas en la mesa.
   Se encarga de construir el reporte que se le dará a los jugadores en su turno para que puedan tener toda la información necesaria para  decidir una jugada en ` ProvidedInformation`.
+
+  

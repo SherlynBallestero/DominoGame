@@ -1,21 +1,32 @@
 # DominoGame
 
-Proyecto de Programación II. Facultad de Matemática y Computación - Universidad de La Habana. Curso 2021-2022.
+**Project for Programming II. Faculty of Mathematics and Computer Science - University of Havana. Course 2021-2022.**
 
-Sherlyn Ballestero Cruz C211
-Richard García Rodríguez C211
+## Project Description
 
-# Descripción del Proyecto
+This project aims to simulate a game similar to the popular board game "domino" by implementing variations in different aspects:
 
-Este proyecto busca cumplir el objetivo de simular un juego de esencia similar al popular juego de mesa dominó mediante la implementación de variaciones en diferentes aspectos:
+- Rules
+- Players
+- Victory conditions
 
-- reglas
-- jugadores
-- condiciones de victoria
-Para más información respecto a las variaciones aplicadas leer el informe completo.
+For more information about the applied variations, please refer to the complete report.
+[spanish](./Informe.md)
+[English](./informe_english.md)
 
-Al usuario de este programa se le ofrece un juego divertido donde puede usar las reglas clásicas, mezclar las reglas propuestas o incluso(si posee conocimientos y desea hacerlo) crear su propias reglas para variar la experiencia tanto como lo desee.
+Users of this program can enjoy a fun game where they can:
+- Use classic rules
+- Mix proposed rules
+- Create their own rules (if they have the knowledge and desire to do so) to customize the experience as desired.
 
-Este proyecto está realizado en el lenguaje C# 10 en Net.Core 6 con una biblioteca de clases en la carpeta DominoGame/juego y la parte visual es una aplicación de consola que se encuentra en la carpeta DominoGame/dominoclasico.
-Para ejecutarlo solo debe acceder a ;a carpeta dominoclasico y poner dotnet run en la terminar o ejecutar el .exe que se encuentra en dicha carpeta.  
+## Implementation Details
+
+- Language: C# 10 in .NET Core 6
+- Class library: Located in the `DominoGame/juego` folder
+- Console application: Located in the `DominoGame/dominoclasico` folder
+
+To run the game, navigate to the `dominoclasico` folder and execute `dotnet run` in the terminal, or run the `.exe` file located in that folder. Enjoy! 😊
+
+# Extra
+To provide an extensible game, Tic Tac Toe has been implemented using the same classes.  
 
