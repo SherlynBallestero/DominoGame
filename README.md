@@ -11,8 +11,8 @@ This project aims to simulate a game similar to the popular board game "domino" 
 - Victory conditions
 
 For more information about the applied variations, please refer to the complete report.
-[spanish](./Informe.md)
-[English](./informe_english.md)
+> - [Spanish](./Informe.md)
+> - [English](./informe_english.md)
 
 Users of this program can enjoy a fun game where they can:
 - Use classic rules
